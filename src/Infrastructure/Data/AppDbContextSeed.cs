@@ -25,12 +25,12 @@ namespace Infrastructure.Data
             await userManager.AddToRoleAsync(defaultUser, "admin");
             await userManager.AddToRoleAsync(defaultUser, "teacher");
 
-            string adminUserName = "mustafas18";
-            var adminUser = new AppUser { UserName = adminUserName, Email = "mustafa_bazghandi@yahoo.com" };
-            await userManager.CreateAsync(adminUser, "P@ssw0rd");
-            adminUser = await userManager.FindByNameAsync(adminUserName);
-            await userManager.AddToRoleAsync(adminUser, "admin");
-            await userManager.AddToRoleAsync(adminUser, "student");
+            //string adminUserName = "mustafas18";
+            //var adminUser = new AppUser { UserName = adminUserName, Email = "mustafa_bazghandi@yahoo.com" };
+            //await userManager.CreateAsync(adminUser, "P@ssw0rd");
+            //adminUser = await userManager.FindByNameAsync(adminUserName);
+            //await userManager.AddToRoleAsync(adminUser, "admin");
+            //await userManager.AddToRoleAsync(adminUser, "student");
         }
     }
 }

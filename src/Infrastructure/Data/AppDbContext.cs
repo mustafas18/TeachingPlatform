@@ -23,7 +23,7 @@ namespace Infrastructure.Data
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<CourseCategory> Categories { get; set; }
-        public DbSet<Section>  Sections { get; set; }
+        //public DbSet<Section>  Sections { get; set; }
         public DbSet<Session> Sessions { get; set; }    
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
@@ -45,13 +45,22 @@ namespace Infrastructure.Data
         {
 
             base.OnModelCreating(modelBuilder);
-         
+
 
             modelBuilder.Entity<Lesson>()
-                .HasData(new Lesson("IELTS Speaking", "IELTS Speaking", "IELTS Speaking")
-                        , new Lesson("IELTS Writing", "IELTS Writing", "IELTS Writing")
+                .HasData(new Lesson(1,"IELTS Speaking", "IELTS Speaking", "IELTS Speaking")
+                        , new Lesson(2,"IELTS Writing", "IELTS Writing", "IELTS Writing")
 
                 );
+            modelBuilder.Entity<CourseCategory>()
+              .HasData(new CourseCategory { Id = 1, NameEn = "IELTS", NameFa = "IELTS" });
+
+            modelBuilder.Entity<Teacher>()
+              .HasData(new Teacher { Id = 1,  UserName="zahra_bazghandi",FullNameEn = "Zahra Bazghandi",  FullNameFa = "زهرا بازقندی" }
+
+
+
+              );
 
         }
     }

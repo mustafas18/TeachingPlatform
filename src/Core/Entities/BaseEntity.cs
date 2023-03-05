@@ -15,8 +15,12 @@ namespace Core.Entities
         {
 
         }
+        public BaseEntity(int id)
+        {
+            Id = id;
+        }
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public virtual int Id { get; protected set; }
+        public int Id { get; set; }
 
         private List<EventBase> _events = new();
         public void AddEvent(EventBase @event) => _events.Add(@event);

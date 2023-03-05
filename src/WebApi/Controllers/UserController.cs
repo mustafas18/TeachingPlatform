@@ -2,7 +2,6 @@
 using Core.Entities;
 using Core.Interfaces;
 using MediatR;
-using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;

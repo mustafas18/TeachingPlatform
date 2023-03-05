@@ -10,6 +10,10 @@ namespace Core.Entities
 {
     public class Teacher:BaseEntity, IAggregateRoot
     {
+        public Teacher()
+        {
+
+        }
         public Teacher(string userName, string fullNameFa, string fullNameEn)
         {
             UserName = userName;

@@ -21,8 +21,8 @@ namespace Core.Entities.CourseAggregate
         public int Duration { get; set; }
         public string Thumbnail { get; set; }
 
-        [InverseProperty(nameof(Course))]
-        public ICollection<Section> Sections { get; set; }
+        //[InverseProperty(nameof(Course))]
+        //public ICollection<Section> Sections { get; set; }
         [InverseProperty(nameof(Course))]
         public ICollection<Session> Session { get; set; }
         public ICollection<Student> Students { get; set; }

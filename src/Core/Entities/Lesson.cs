@@ -9,7 +9,7 @@ namespace Core.Entities
 {
     public class Lesson : BaseEntity, IAggregateRoot
     {
-        public Lesson(string nameFa, string nameEn, string description)
+        public Lesson(int id, string nameFa, string nameEn, string description) : base(id)
         {
             NameFa = nameFa;
             NameEn = nameEn;

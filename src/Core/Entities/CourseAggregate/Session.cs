@@ -13,7 +13,7 @@ namespace Core.Entities.CourseAggregate
         public string TitleFa { get; set; }
         public string TitleEn { get; set; }
         public Course Course { get; set; }
-        public Section Section { get; set; }
+        //public Section Section { get; set; }
         public SessionType SessionType { get; set; } = SessionType.Video;
         /// <summary>
         /// Duriation in second
