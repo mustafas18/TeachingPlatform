@@ -123,18 +123,10 @@ namespace WebApi
             using (var scope = app.Services.CreateScope())
             {
                 var scopedProvider = scope.ServiceProvider;
-                try
-                {
-
                     var userManager = scopedProvider.GetRequiredService<UserManager<AppUser>>();
                     var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
                     var identityContext = scopedProvider.GetRequiredService<AppDbContext>();
                     await AppDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
-                }
-                catch (Exception ex)
-                {
-                    app.Logger.LogError(ex, "An error occurred seeding the DB.");
-                }
             }
 
             if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")

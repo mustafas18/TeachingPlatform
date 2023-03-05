@@ -18,8 +18,8 @@ namespace Infrastructure.Data
             await roleManager.CreateAsync(new IdentityRole("teacher"));
             await roleManager.CreateAsync(new IdentityRole("student"));
 
-            string defaultUserName = "bazghandizahra@ielts.ir";
-            var defaultUser = new AppUser { UserName = "zahra_bazghandi", Email = "bazghandizahra@ielts.ir" };
+            string defaultUserName = "zahra_bazghandi";
+            var defaultUser = new AppUser { UserName = defaultUserName, Email = "bazghandizahra@ielts.ir" };
             await userManager.CreateAsync(defaultUser, "P@ssw0rd");
             defaultUser = await userManager.FindByNameAsync(defaultUserName);
             await userManager.AddToRoleAsync(defaultUser, "admin");
