@@ -26,7 +26,7 @@ namespace WebApi.Commands.Courses
                 Description = c.Description,
                 Duration = c.Duration,
                 Price = c.Price,
-                Thumnail = c.Thumnail,
+                Thumbnail = c.Thumbnail,
                 TitleEn = c.TitleEn,
                 TitleFa = c.TitleFa,
             });

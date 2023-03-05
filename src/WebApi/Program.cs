@@ -2,24 +2,13 @@
 using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using MediatR;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Data.Entity;
 using System.Reflection;
 using System.Text;
-using static System.Formats.Asn1.AsnWriter;
-using Microsoft.Extensions.DependencyInjection;
-using WebApi.Commands.Courses;
-using WebApi.ViewModels;
-using WebApi.Commands.TeachingRequest;
-using Core.Interfaces;
-using Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Infrastructure.Identity;
 using Core;
@@ -28,13 +17,13 @@ namespace WebApi
 {
     public class Program
     {
-      
+
         public static async Task Main(string[] args)
         {
 
             var builder = WebApplication.CreateBuilder(args);
             ConfigurationManager Configuration = builder.Configuration;
-         
+
 
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -57,13 +46,13 @@ namespace WebApi
                        .AddEntityFrameworkStores<AppDbContext>()
                        .AddDefaultTokenProviders();
 
-     
+
             // Add services to the container.
             builder.Services.AddMyServices();
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-             
+
 
             builder.Services.AddSwaggerGen(c =>
             {
@@ -71,7 +60,7 @@ namespace WebApi
                 {
                     Title = "Teaching Platform API",
                     Version = "v1",
-                    Description= "پلتفرم آموزش آنلاین",
+                    Description = "پلتفرم آموزش آنلاین",
                 });
                 // To Enable authorization using Swagger (JWT)  
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -99,7 +88,7 @@ namespace WebApi
                     }
                 });
             });
-           
+
             builder.Services.AddDbContext<AppDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
 
@@ -121,7 +110,7 @@ namespace WebApi
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
                     ValidAudience = jwtSettings.GetSection("validAudience").Value,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstants.securityKey))
                 };
             });
 
@@ -132,8 +121,8 @@ namespace WebApi
 
             var app = builder.Build();
 
-            using(var scope = app.Services.CreateScope())
-{
+            using (var scope = app.Services.CreateScope())
+            {
                 var scopedProvider = scope.ServiceProvider;
                 try
                 {

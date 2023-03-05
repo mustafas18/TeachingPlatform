@@ -5,6 +5,10 @@ namespace WebApi.ViewModels.Acconut
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
+
+        [Required]
         [Display(Name = "Mobile")]
         public string? Mobile { get; set; }
 

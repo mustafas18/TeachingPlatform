@@ -27,9 +27,9 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
         [HttpPost]
-        public Task<IActionResult> Register([FromBody] RegisterViewModel register)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel register)
         {
-            var result = _mediator.Send(new RegisterUser);
+            var result =await _mediator.Send(new RegisterUser(register));
             return Ok(result);
         }
 

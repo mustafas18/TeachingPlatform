@@ -1,14 +1,14 @@
 ﻿using Core.Entities;
 using Core.Entities.CourseAggregate;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.ViewModels
 {
-    public class CourseViewModel
+    public class CourseCreateViewModel
     {
         public string TitleFa { get; set; }
         public string TitleEn { get; set; }
-        public CourseCategory Category { get; set; }
+        public int CategoryId { get; set; }
+        public int TeacherId { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
         /// <summary>

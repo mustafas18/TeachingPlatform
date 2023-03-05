@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Commands.Courses;
 using WebApi.Commands.TeachingRequest;
+using WebApi.ViewModels;
 
 namespace WebApi.Controllers
 {
@@ -16,7 +17,13 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll() {
             var result = await _mediator.Send(new GetAllCourses());
-
+             
+            return Ok(result);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody]CourseCreateViewModel course)
+        {
+            var result=await _mediator.Send(new CreateCourse(course));
             return Ok(result);
         }
 

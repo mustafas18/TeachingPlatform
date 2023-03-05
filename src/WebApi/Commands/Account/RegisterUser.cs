@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using Core.Entities;
+using MediatR;
 using WebApi.ViewModels;
 using WebApi.ViewModels.Acconut;
 
 namespace WebApi.Commands.Account
 {
-    public class RegisterUser:IRequest<DefaultResultViewModel<string>>
+    public class RegisterUser:IRequest<AppUser>
     {
         public RegisterUser(RegisterViewModel register)
         {
