@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.CourseAggregate
 {
-    public class Section : BaseEntity
+    public class Section : BaseEntity, IAggregateRoot
     {
         public string TitleFa { get; set; }
         public string TitleEn { get; set; }

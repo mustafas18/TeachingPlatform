@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Core.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class AppUser: IdentityUser
+    public class AppUser: IdentityUser, IAggregateRoot
     {
         public string FullNameFa { get;set; }
         public string FullNameEn { get;set; }

@@ -1,14 +1,12 @@
 ﻿using Core.Entities.CourseAggregate;
+using Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class Student: BaseEntity
+    public class Student: BaseEntity, IAggregateRoot
     {
         public Student(string userName)
         {
