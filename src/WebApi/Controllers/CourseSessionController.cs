@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Commands.Courses;
 using WebApi.Commands.CourseSessions;
@@ -14,13 +15,15 @@ namespace WebApi.Controllers
         {
             _mediator = mediator;
         }
+        [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> Get(int courseId)
+        public async Task<IActionResult> GetbySessionId(int sessionId)
         {
-            var result = await _mediator.Send(new GetSessions(courseId));
+            var result = await _mediator.Send(new GetSession(sessionId));
 
             return Ok(result);
         }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] SessionViewModel session)
         {

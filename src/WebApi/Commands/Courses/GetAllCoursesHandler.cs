@@ -1,4 +1,5 @@
-﻿using Core.Entities.CourseAggregate;
+﻿using Core.Dtos;
+using Core.Entities.CourseAggregate;
 using Core.Interfaces;
 using Core.Specifications;
 using MediatR;
@@ -21,10 +22,7 @@ namespace WebApi.Commands.Courses
             var courses = await _courseRepository.ListAsync(specification, cancellationToken);
             return courses.Select(c => new CourseViewModel
             {
-                Category = c.Category,
                 CreatedTime = c.CreatedTime,
-                Description = c.Description,
-                Duration = c.Duration,
                 Price = c.Price,
                 Thumbnail = c.Thumbnail,
                 TitleEn = c.TitleEn,

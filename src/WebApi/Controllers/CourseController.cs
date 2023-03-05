@@ -22,6 +22,14 @@ namespace WebApi.Controllers
              
             return Ok(result);
         }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetById(int courseId)
+        {
+            var result = await _mediator.Send(new GetCourse(courseId));
+
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CourseCreateViewModel course)
         {

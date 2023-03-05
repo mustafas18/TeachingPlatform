@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Core.Dtos;
+using MediatR;
 using WebApi.ViewModels;
 
 namespace WebApi.Commands.Courses
