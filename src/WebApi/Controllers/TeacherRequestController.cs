@@ -28,7 +28,6 @@ namespace WebApi.Controllers
 
             return Ok(result);
         }
-        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetByTeacherId(int teacherId)
         {
             var result = await _mediator.Send(new GetTeachingRequests(teacherId));

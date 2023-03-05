@@ -31,9 +31,7 @@ namespace Infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // To add migration uncoment the second line. and then run the second command:
-            //1. optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=bahar20;Trusted_Connection=True;MultipleActiveResultSets=true");
-            //2. Add-Migration initial2 -Project DAL
+            // EntityFrameworkCore\Add-Migration <Migration-Name> -Project Infrastructure
 
             if (!optionsBuilder.IsConfigured)
             {

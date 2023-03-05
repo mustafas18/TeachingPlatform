@@ -48,7 +48,15 @@ namespace WebApi
 
             // Add services to the container.
             builder.Services.AddMyServices();
-            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddCors(opt =>
+            {
+                opt.AddPolicy("myCorsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200",
+                                                                            "http://example.com");
+                });
+            });
+
 
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
@@ -93,8 +101,6 @@ namespace WebApi
 
 
 
-
-            var jwtSettings = Configuration.GetSection("JwtSettings");
             builder.Services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -107,12 +113,11 @@ namespace WebApi
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
-                    ValidAudience = jwtSettings.GetSection("validAudience").Value,
+                    ValidIssuer = AppConstants.validIssuer,
+                    ValidAudience = AppConstants.validAudience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstants.securityKey))
                 };
             });
-
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();

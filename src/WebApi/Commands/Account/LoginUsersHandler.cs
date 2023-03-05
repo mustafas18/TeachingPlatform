@@ -20,7 +20,7 @@ namespace WebApi.Commands.Account
             return new LoginResultViewModel
             {
                 UserName = request.UserInfo?.UserName,
-                AccessToken = accessToken,
+                AccessToken =accessToken,
                 IssuedDate = DateTime.UtcNow,
             };
         }

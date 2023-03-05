@@ -16,8 +16,7 @@ using WebApi.ViewModels.Acconut;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class UserController : ControllerBase
+    public class UserController : BaseApiController
     {
         private readonly IMediator _mediator;
 
@@ -38,6 +37,7 @@ namespace WebApi.Controllers
                 Picture = result.Picture
             });
         }
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel register)
         {
@@ -45,9 +45,8 @@ namespace WebApi.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        [Authorize]
         [AllowAnonymous]
+        [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginInfoDto userInfo)
         {
             try
