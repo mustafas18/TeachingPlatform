@@ -25,10 +25,23 @@ namespace WebApi.Controllers
         {
             _mediator = mediator;
         }
+        [Authorize(Roles="admin,teacher")]
+        [HttpGet]
+        public async Task<IActionResult> GetUserInfo(string userName)
+        {
+            var result = _mediator.Send(new GetUser(userName)).Result;
+            return Ok(new UserInfoViewModel
+            {
+                FullNameEn = result.FullNameEn,
+                FullNameFa = result.FullNameFa,
+                Mobile = result.Mobile,
+                Picture = result.Picture
+            });
+        }
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel register)
         {
-            var result =await _mediator.Send(new RegisterUser(register));
+            var result = await _mediator.Send(new RegisterUser(register));
             return Ok(result);
         }
 
@@ -48,8 +61,8 @@ namespace WebApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-           
-              
+
+
 
 
     }
