@@ -4,7 +4,7 @@ using WebApi.ViewModels;
 
 namespace WebApi.Commands.Courses
 {
-    public class CreateCourse:IRequest<Course>
+    public class CreateCourse : IRequest<Course>
     {
         public CreateCourse(CourseCreateViewModel courseCreate)
         {

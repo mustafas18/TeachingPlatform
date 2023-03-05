@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Commands.Courses;
 using WebApi.Commands.TeachingRequest;
@@ -14,6 +15,7 @@ namespace WebApi.Controllers
         {
             _mediator = mediator;
         }
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll() {
             var result = await _mediator.Send(new GetAllCourses());
