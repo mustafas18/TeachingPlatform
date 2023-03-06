@@ -5,6 +5,7 @@ namespace WebApi.ViewModels
 {
     public class TeachingRequestViewModel
     {
+        public int Id { get; set; }
         public Student Student { get; set; }
         public int TeacherId { get; set; }
         public string TeacherName { get; set; }

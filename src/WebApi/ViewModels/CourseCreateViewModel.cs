@@ -5,6 +5,7 @@ namespace WebApi.ViewModels
 {
     public class CourseCreateViewModel
     {
+        public int Id { get; set; }
         public string TitleFa { get; set; }
         public string TitleEn { get; set; }
         public int CategoryId { get; set; }
@@ -15,7 +16,7 @@ namespace WebApi.ViewModels
         /// Duriation in second
         /// </summary>
         public int Duration { get; set; }
-        public string Thumbnail { get; set; }
+        public IFormFile Thumbnail { get; set; }
         public DateTime CreatedTime { get; set; }
     }
 }

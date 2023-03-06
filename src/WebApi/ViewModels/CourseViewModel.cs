@@ -6,6 +6,7 @@ namespace WebApi.ViewModels
 {
     public class CourseViewModel
     {
+        public int Id { get; set; }
         public string TitleFa { get; set; }
         public string TitleEn { get; set; }
         public int Price { get; set; }
