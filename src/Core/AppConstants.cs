@@ -8,7 +8,8 @@
 
         public static string validAudience= "https://localhost:7014";
 
-        public static int expiryInMinutes = 5;
+        public static int ExpiryInHours = 24;
+        
 
     }
 }

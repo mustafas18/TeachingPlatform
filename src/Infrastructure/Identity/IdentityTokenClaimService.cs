@@ -48,7 +48,7 @@ namespace Infrastructure.Identity
                issuer: AppConstants.validIssuer,
                audience: AppConstants.validAudience,
                claims: claims,
-               expires: DateTime.Now.AddMinutes(Convert.ToDouble(AppConstants.expiryInMinutes)),
+               expires: DateTime.Now.AddHours(Convert.ToDouble(AppConstants.ExpiryInHours)),
                signingCredentials: signingCredentials
                );
 
