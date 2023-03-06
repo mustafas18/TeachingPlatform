@@ -16,7 +16,6 @@ namespace WebApi.Commands.CourseSessions
         }
         public async Task<Session> Handle(GetSession request, CancellationToken cancellationToken)
         {
-            var specification = new SessionSpecification(request.SessionId);
             var session = await _repository.GetByIdAsync(request.SessionId, cancellationToken);
             return session;
         }

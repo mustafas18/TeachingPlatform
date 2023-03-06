@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Core.Entities.CourseAggregate;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Commands.Courses;
@@ -27,9 +28,9 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetById(int courseId)
         {
-            var result = await _mediator.Send(new GetCourse(courseId));
-
-            return Ok(result);
+            var course = await _mediator.Send(new GetCourse(courseId));
+            course.Sessions.ForEach(p => { p.Course = null; });
+            return Ok(course);
         }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CourseCreateViewModel course)

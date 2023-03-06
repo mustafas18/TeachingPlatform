@@ -531,7 +531,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.CourseAggregate.Session", b =>
                 {
                     b.HasOne("Core.Entities.CourseAggregate.Course", "Course")
-                        .WithMany("Session")
+                        .WithMany("Sessions")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -634,7 +634,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.CourseAggregate.Course", b =>
                 {
-                    b.Navigation("Session");
+                    b.Navigation("Sessions");
                 });
 
             modelBuilder.Entity("Core.Entities.Student", b =>

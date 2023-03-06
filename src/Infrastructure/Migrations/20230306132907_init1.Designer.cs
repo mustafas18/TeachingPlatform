@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230305231542_init2")]
-    partial class init2
+    [Migration("20230306132907_init1")]
+    partial class init1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -534,7 +534,7 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.CourseAggregate.Session", b =>
                 {
                     b.HasOne("Core.Entities.CourseAggregate.Course", "Course")
-                        .WithMany("Session")
+                        .WithMany("Sessions")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -637,7 +637,7 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Entities.CourseAggregate.Course", b =>
                 {
-                    b.Navigation("Session");
+                    b.Navigation("Sessions");
                 });
 
             modelBuilder.Entity("Core.Entities.Student", b =>

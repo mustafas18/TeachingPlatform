@@ -17,8 +17,7 @@ namespace WebApi.Commands.Courses
         }
         public async Task<Course> Handle(GetCourse request, CancellationToken cancellationToken)
         {
-            var specification = new CourseSpecification(request.CourseId);
-            var course = await _courseRepository.GetByIdAsync(request.CourseId, cancellationToken);
+            var course = await _courseRepository.CourseWithSession(request.CourseId);
             return course;
         }
     }

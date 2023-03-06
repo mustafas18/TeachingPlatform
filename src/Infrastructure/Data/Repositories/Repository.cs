@@ -27,7 +27,7 @@ namespace Infrastructure.Data.Repositories
             _context.Set<TEntity>().Add(entity);
             await _context.SaveChangesAsync();
         }
-
+      
         public List<TEntity> GetAll()
         {
             return _context.Set<TEntity>().ToList();

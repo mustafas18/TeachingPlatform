@@ -12,7 +12,7 @@ namespace Core.Specifications
     {
         public CourseSpecification(int courseId)
         {
-            Query.Include(p => p.Session)
+            Query.Include(p => p.Sessions)
                 .Where(p =>p.Id== courseId);
         }
     }
