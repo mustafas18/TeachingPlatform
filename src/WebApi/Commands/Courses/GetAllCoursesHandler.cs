@@ -22,6 +22,7 @@ namespace WebApi.Commands.Courses
             var courses = await _courseRepository.ListAsync(specification, cancellationToken);
             return courses.Select(c => new CourseViewModel
             {
+                Id= c.Id,
                 CreatedTime = c.CreatedTime,
                 Price = c.Price,
                 Thumbnail = c.Thumbnail,

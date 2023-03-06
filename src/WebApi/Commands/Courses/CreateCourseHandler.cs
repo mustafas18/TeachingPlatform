@@ -20,10 +20,14 @@ namespace WebApi.Commands.Courses
             _categoryReadRepo = categoryReadRepo;
             _teacherReadRepo = teacherReadRepo;
         }
-        public Task<Course> Handle(CreateCourse request, CancellationToken cancellationToken)
+        public async Task<Course> Handle(CreateCourse request, CancellationToken cancellationToken)
         {
             var category = _categoryReadRepo.GetByIdAsync(request.CourseCreate.CategoryId).Result;
             var teacher = _teacherReadRepo.GetByIdAsync(request.CourseCreate.TeacherId).Result;
+
+            using var memoryStream = new MemoryStream();
+                 request.CourseCreate.Thumbnail.CopyToAsync(memoryStream);
+               var thumbnail = Convert.ToBase64String(memoryStream.ToArray());
 
             var course = new Course
             {
@@ -32,13 +36,13 @@ namespace WebApi.Commands.Courses
                 Description = request.CourseCreate.Description,
                 Duration = request.CourseCreate.Duration,
                 Price = request.CourseCreate.Price,
-                Thumbnail = request.CourseCreate.Thumbnail,
+                Thumbnail = thumbnail,
                 TitleEn = request.CourseCreate.TitleEn,
                 TitleFa = request.CourseCreate.TitleFa,
                 Teacher = teacher
             };
          _courseRepository.AddAsync(course);
-            return Task.FromResult(course);
+            return course;
         }
     }
 }

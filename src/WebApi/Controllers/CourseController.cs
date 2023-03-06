@@ -31,7 +31,7 @@ namespace WebApi.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody]CourseCreateViewModel course)
+        public async Task<IActionResult> Create([FromForm]CourseCreateViewModel course)
         {
             var result=await _mediator.Send(new CreateCourse(course));
             return Ok(result);

@@ -118,9 +118,9 @@ namespace WebApi
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstants.securityKey))
                 };
             });
-
-            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddControllers();
+          
 
 
             var app = builder.Build();
