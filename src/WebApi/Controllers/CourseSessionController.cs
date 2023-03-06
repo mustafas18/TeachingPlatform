@@ -27,8 +27,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] SessionViewModel session)
         {
-            var result = await _mediator.Send(new CreateSession(session));
-            return Ok(result);
+            try
+            {
+                var result = await _mediator.Send(new CreateSession(session));
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+               return StatusCode(500,ex.Message);
+            }
         }
 
     }

@@ -38,9 +38,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] TeacherRequestDto teacherRequest)
         {
-
-          var result=  _teachRequestService.AddTeacherRequest(teacherRequest);
-            return Ok(result);
+            try
+            {
+                var result = _teachRequestService.AddTeacherRequest(teacherRequest);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int Id)

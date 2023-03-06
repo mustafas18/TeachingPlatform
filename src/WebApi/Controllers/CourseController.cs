@@ -8,7 +8,7 @@ using WebApi.ViewModels;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class CourseController: BaseApiController
+    public class CourseController : BaseApiController
     {
         private readonly IMediator _mediator;
         public CourseController(IMediator mediator)
@@ -17,9 +17,10 @@ namespace WebApi.Controllers
         }
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetAll() {
+        public async Task<IActionResult> GetAll()
+        {
             var result = await _mediator.Send(new GetAllCourses());
-             
+
             return Ok(result);
         }
         [AllowAnonymous]
@@ -31,10 +32,18 @@ namespace WebApi.Controllers
             return Ok(result);
         }
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm]CourseCreateViewModel course)
+        public async Task<IActionResult> Create([FromForm] CourseCreateViewModel course)
         {
-            var result=await _mediator.Send(new CreateCourse(course));
-            return Ok(result);
+            try
+            {
+                var result = await _mediator.Send(new CreateCourse(course));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
 
     }

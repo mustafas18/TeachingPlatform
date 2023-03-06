@@ -42,6 +42,7 @@ namespace WebApi.Commands.Courses
                 Teacher = teacher
             };
          _courseRepository.AddAsync(course);
+            course.Thumbnail = "OK";
             return course;
         }
     }

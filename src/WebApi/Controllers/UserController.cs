@@ -41,8 +41,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel register)
         {
-            var result = await _mediator.Send(new RegisterUser(register));
-            return Ok(result);
+            try
+            {
+                var result = await _mediator.Send(new RegisterUser(register));
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500,ex.Message);
+            }
         }
 
         [AllowAnonymous]
@@ -57,7 +64,7 @@ namespace WebApi.Controllers
 
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
