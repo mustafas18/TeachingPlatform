@@ -17,6 +17,6 @@ Here is  the diagram:
 
 ![DDD](https://github.com//mustafas18/TeachingPlatform/blob/master/DesignDiagram.png?raw=true)
 
-To improve consistency and scalability, the repositories are segregated into *ReadRepository* and *Repository*. This segregation reduces merge conflicts while performing multiple operations with data. *ReadRepository* is used for reading operations, and *Repository* is for creating, updating, and deleting operations on database.
+To improve consistency and scalability, the repositories are segregated into *ReadRepository* and *Repository*. This segregation reduces merge conflicts while performing multiple operations with data. *ReadRepository* is used for reading operations, while *Repository* is for creating, updating, and deleting operations on database.
 
 I encourage programmers to contribute.
