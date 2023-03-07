@@ -36,7 +36,6 @@ namespace WebApi.Controllers
             }
             
         }
-        [HttpGet("{teacherId:int}")]
         public async Task<IActionResult> GetByTeacherId(int teacherId)
         {
             try

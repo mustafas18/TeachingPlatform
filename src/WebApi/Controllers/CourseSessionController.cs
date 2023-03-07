@@ -27,7 +27,7 @@ namespace WebApi.Controllers
             }
             catch(Exception ex)
             {
-                Task.FromResult(StatusCode(500, ex.Message));
+                return StatusCode(500, ex.Message);
             }
         }
 
