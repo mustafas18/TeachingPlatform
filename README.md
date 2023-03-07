@@ -9,7 +9,7 @@ The platform has the following features
 
 ## Technical Description
 
-The project have a monolithic architecture. The domain-driven design approach is applied to the project. 
+The project have a monolithic architecture. The domain-driven design approach is applied to the project. The project can be a starting point for implimenting CQRS/ES patern.
 
 In the project, clients send requests to command services via MediatR. Using the Mediator pattern helps to communicate with multiple objects efficiently in a loosely coupled manner.
 
