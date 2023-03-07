@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using Core.Entities.CourseAggregate;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;

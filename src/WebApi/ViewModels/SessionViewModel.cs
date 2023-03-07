@@ -1,5 +1,4 @@
-﻿using Core.Entities.CourseAggregate;
-using Core.Enums;
+﻿using Core.Enums;
 
 namespace WebApi.ViewModels
 {

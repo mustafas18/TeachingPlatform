@@ -1,5 +1,5 @@
 ﻿using Core.Dtos;
-using Core.Entities.CourseAggregate;
+using Core.Entities;
 using MediatR;
 using WebApi.ViewModels;
 

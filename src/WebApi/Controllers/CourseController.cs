@@ -1,5 +1,4 @@
-﻿using Core.Entities.CourseAggregate;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Commands.Courses;

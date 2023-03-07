@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Core.Entities.CourseAggregate;
+using Core.Entities;
 using Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,6 +12,7 @@ namespace Core.Interfaces
 {
     public interface IReadRepository<T> : IReadRepositoryBase<T> where T : class, IAggregateRoot
     {
+        List<T> GetAll();
         Task<Course> CourseWithSession(int id);
     }
 }

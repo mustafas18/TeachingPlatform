@@ -1,5 +1,5 @@
 ﻿using Ardalis.Specification;
-using Core.Entities.CourseAggregate;
+using Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

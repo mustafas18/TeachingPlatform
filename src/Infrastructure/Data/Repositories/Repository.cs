@@ -16,6 +16,7 @@ namespace Infrastructure.Data.Repositories
         {
             _context = context;
         }
+
         public void Add(TEntity entity)
         {
             _context.Set<TEntity>().Add(entity);
@@ -27,7 +28,7 @@ namespace Infrastructure.Data.Repositories
             _context.Set<TEntity>().Add(entity);
             await _context.SaveChangesAsync();
         }
-      
+
         public List<TEntity> GetAll()
         {
             return _context.Set<TEntity>().ToList();
@@ -45,5 +46,7 @@ namespace Infrastructure.Data.Repositories
 
 
         }
+
+
     }
 }

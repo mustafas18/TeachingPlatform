@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using Core.Entities.CourseAggregate;
 using Core.Interfaces;
 using MediatR;
 

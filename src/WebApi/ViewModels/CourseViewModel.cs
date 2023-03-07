@@ -1,5 +1,4 @@
 ﻿using Core.Entities;
-using Core.Entities.CourseAggregate;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.ViewModels

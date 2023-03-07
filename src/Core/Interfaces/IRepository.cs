@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -9,9 +10,7 @@ namespace Core.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        void Add(TEntity entity);
         Task AddAsync(TEntity entity);
-        List<TEntity> GetAll();
         IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "",

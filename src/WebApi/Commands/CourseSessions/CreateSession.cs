@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using Core.Entities.CourseAggregate;
 using WebApi.ViewModels;
+using Core.Entities;
 
 namespace WebApi.Commands.CourseSessions
 {
