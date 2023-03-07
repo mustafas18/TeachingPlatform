@@ -15,11 +15,6 @@ I encourage programmers to contribute.
 
 In the project, clients sends request to command services. MediatR is used in the controllers. Using Mediator pattern in controller is my idea, which may be criticised by other developers. Here is  the diagram:
 
-Cient ---> Command Sevice ---> Event
-                 |
-                 |
-                 Repository
-
-
+![DDD](https://github.com//mustafas18/TeachingPlatform/blob/master/Diagram-Design.png?raw=true)
 
 
