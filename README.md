@@ -10,6 +10,16 @@ The platform has the following features
 ## Technical Description
 
 The project is based on monolithic architecture. 
-In the project, I try to employ Domain-driven design concepts such as aggregates, commands, events, and etc.
-I try to follow SOLID principal.
-I mostly use commands. MediatR is used in the controllers. Using Mediator pattern in controller is my thesis, which may be criticised by other developers.
+In the project, The domain-driven design approach is applied. However, event store is not implemented yet. 
+I encourage programmers to contribute.
+
+In the project, clients sends request to command services. MediatR is used in the controllers. Using Mediator pattern in controller is my idea, which may be criticised by other developers. Here is  the diagram:
+
+Cient ---> Command Sevice ---> Event
+                 |
+                 |
+                 Repository
+
+
+
+
