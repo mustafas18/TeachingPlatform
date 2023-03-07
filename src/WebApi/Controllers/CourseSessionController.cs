@@ -19,9 +19,16 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetbySessionId(int sessionId)
         {
-            var result = await _mediator.Send(new GetSession(sessionId));
+            try
+            {
+                var result = await _mediator.Send(new GetSession(sessionId));
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                Task.FromResult(StatusCode(500, ex.Message));
+            }
         }
 
         [HttpPost]

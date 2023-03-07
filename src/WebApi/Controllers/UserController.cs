@@ -28,14 +28,22 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUserInfo(string userName)
         {
-            var result = _mediator.Send(new GetUser(userName)).Result;
-            return Ok(new UserInfoViewModel
+            try
             {
-                FullNameEn = result.FullNameEn,
-                FullNameFa = result.FullNameFa,
-                Mobile = result.Mobile,
-                Picture = result.Picture
-            });
+                var result =await _mediator.Send(new GetUser(userName));
+                return Ok(new UserInfoViewModel
+                {
+                    FullNameEn = result.FullNameEn,
+                    FullNameFa = result.FullNameFa,
+                    Mobile = result.Mobile,
+                    Picture = result.Picture
+                });
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
         [AllowAnonymous]
         [HttpPost]

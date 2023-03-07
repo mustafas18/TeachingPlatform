@@ -24,15 +24,30 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _mediator.Send(new GetAllTeachingRequests());
+            try
+            {
+                var result = await _mediator.Send(new GetAllTeachingRequests());
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+               return StatusCode(500, ex.Message);
+            }
+            
         }
         [HttpGet("{teacherId:int}")]
         public async Task<IActionResult> GetByTeacherId(int teacherId)
         {
-            var result = await _mediator.Send(new GetTeachingRequests(teacherId));
-            return Ok(result);
+            try
+            {
+                var result = await _mediator.Send(new GetTeachingRequests(teacherId));
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                StatusCode(500,ex.Message);
+            }
         }
 
         [HttpPost]

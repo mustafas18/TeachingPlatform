@@ -19,17 +19,33 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var result = await _mediator.Send(new GetAllCourses());
+            try
+            {
+                var result = await _mediator.Send(new GetAllCourses());
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
         }
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetById(int courseId)
         {
-            var course = await _mediator.Send(new GetCourse(courseId));
-            course.Sessions.ForEach(p => { p.Course = null; });
-            return Ok(course);
+            try
+            {
+                var course = await _mediator.Send(new GetCourse(courseId));
+                course.Sessions.ForEach(p => { p.Course = null; });
+                return Ok(course);
+            }
+            catch(Exception ex)
+            {
+               return StatusCode(500, ex.Message);
+            }
+
         }
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CourseCreateViewModel course)
