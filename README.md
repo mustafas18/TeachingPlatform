@@ -9,12 +9,12 @@ The platform has the following features
 
 ## Technical Description
 
-The project is based on monolithic architecture. 
-In the project, The domain-driven design approach is applied. However, event store is not implemented yet. 
-I encourage programmers to contribute.
+The project have a monolithic architecture. The domain-driven design approach is applied to the project. I encourage programmers to contribute.
 
-In the project, clients sends request to command services. MediatR is used in the controllers. Using Mediator pattern in controller is my idea, which may be criticised by other developers. Here is  the diagram:
+In the project, clients send requests to command services via MediatR. Using the Mediator pattern helps to communicate with multiple objects efficiently in a loosely coupled manner.
+
+Here is  the diagram:
 
 ![DDD](https://github.com//mustafas18/TeachingPlatform/blob/master/DesignDiagram.png?raw=true)
 
-
+To improve consistency and scalability, the repositories are segregated into *ReadRepository* and *Repository*. This segregation reduces merge conflicts while performing multiple operations with data. *ReadRepository* is used for reading operations, and *Repository* is for creating, updating, and deleting operations on database.
