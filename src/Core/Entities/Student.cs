@@ -1,5 +1,4 @@
-﻿using Core.Entities.CourseAggregate;
-using Core.Interfaces;
+﻿using Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
