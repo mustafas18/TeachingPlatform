@@ -62,10 +62,11 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int Id)
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int requestId)
         {
-            return Ok(new NotImplementedException());
+            return Ok();
         }
     }
 }

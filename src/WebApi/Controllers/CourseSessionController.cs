@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Core.Entities;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Commands.Courses;
@@ -44,6 +45,15 @@ namespace WebApi.Controllers
                return StatusCode(500,ex.Message);
             }
         }
-
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] Session session)
+        {
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int sessionId)
+        {
+            return Ok();
+        }
     }
 }
