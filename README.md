@@ -19,4 +19,10 @@ Here is  the diagram:
 
 To improve consistency and scalability, the repositories are segregated into *ReadRepository* and *Repository*. This segregation reduces merge conflicts while performing multiple operations with data. *ReadRepository* is used for reading operations, while *Repository* is for creating, updating, and deleting operations on database.
 
+*Repository* and *ReadRepository* lifetime:
+```
+  services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+  services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
+```
+
 I encourage programmers to contribute.
