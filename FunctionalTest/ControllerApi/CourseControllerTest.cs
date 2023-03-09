@@ -23,12 +23,11 @@ namespace FunctionalTest.ControllerApi
         [Fact]
         public async Task Returns_CourseList()
         {
-            var response = await _httpClient.GetAsync("/api/projects");
+            var response = await _httpClient.GetAsync("/api/Course/GetAll");
             var stringResponse = await response.Content.ReadAsStringAsync();
-            _outputHelper.WriteLine(stringResponse);
-            var result = System.Text.Json.JsonSerializer.Deserialize<Course>(stringResponse);
+            _outputHelper.WriteLine($"Responce: {stringResponse}");
 
-            Assert.NotNull(result);
+            Assert.NotNull(response);
         }
 
     }

@@ -10,6 +10,10 @@ namespace Core.Entities
 {
     public class AppUser: IdentityUser, IAggregateRoot
     {
+        public AppUser()
+        {
+
+        }
         public string FullNameFa { get;set; }
         public string FullNameEn { get;set; }
         public string Picture { get;set; }

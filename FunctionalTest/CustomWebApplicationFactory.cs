@@ -63,7 +63,7 @@ namespace FunctionalTest
                     // Add ApplicationDbContext using an in-memory database for testing.
                     services.AddDbContext<AppDbContext>(options =>
                     {
-                        options.UseInMemoryDatabase(inMemoryCollectionName);
+                        options.UseInMemoryDatabase(inMemoryCollectionName, b => b.EnableNullChecks(false));
                     });
                 });
         }
