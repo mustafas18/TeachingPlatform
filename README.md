@@ -11,7 +11,9 @@ The platform has the following features
 
 The project have a monolithic architecture. The domain-driven design approach is applied to the project.
 
-In the project, clients send requests to command services via MediatR. Using the Mediator pattern helps to communicate with multiple objects efficiently in a loosely coupled manner.
+In the project, clients send requests to command services via MediatR. 
+The command patern decouple classes that invoke operations from classes that perform these operations. As a result it improves single responsibility principle. 
+Using the Mediator pattern reduce chaotic dependencies between repositories, services and controllers.
 
 Here is  the diagram:
 
