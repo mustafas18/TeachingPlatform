@@ -28,5 +28,4 @@ To improve consistency and scalability, the repositories are segregated into *Re
 I encourage programmers to contribute.
 
 Best regard,
-
 S. Mustafa Bazghandi
