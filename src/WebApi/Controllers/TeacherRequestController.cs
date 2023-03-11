@@ -55,6 +55,8 @@ namespace WebApi.Controllers
         {
             try
             {
+                //Todo: It's good idea to use a command
+                //var result = await _mediator.Send(new AddTeacherRequest(teacherRequest));
                 var result = _teachRequestService.AddTeacherRequest(teacherRequest);
                 return Ok(result);
             }
