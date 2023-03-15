@@ -24,9 +24,14 @@ namespace WebApi.Commands.Courses
             var category = _categoryReadRepo.GetByIdAsync(request.CourseCreate.CategoryId).Result;
             var teacher = _teacherReadRepo.GetByIdAsync(request.CourseCreate.TeacherId).Result;
 
-            using var memoryStream = new MemoryStream();
-                 request.CourseCreate.Thumbnail.CopyToAsync(memoryStream);
-               var thumbnail = Convert.ToBase64String(memoryStream.ToArray());
+            string filePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads",$"Course_{Guid.NewGuid().ToString()}" );
+            var fileExtension = System.IO.Path.GetExtension(request.CourseCreate.Thumbnail.FileName);
+            if (!Directory.Exists(filePath))
+                Directory.CreateDirectory(filePath);
+            filePath += fileExtension;
+            using var stream = new FileStream(filePath,FileMode.CreateNew);
+                 request.CourseCreate.Thumbnail.CopyToAsync(stream, cancellationToken);
+               var thumbnail = filePath;
 
             var course = new Course
             {

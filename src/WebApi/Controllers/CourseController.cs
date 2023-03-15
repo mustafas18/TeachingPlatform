@@ -63,6 +63,9 @@ namespace WebApi.Controllers
             }
 
         }
+#if DEBUG
+        [AllowAnonymous]
+#endif
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CourseCreateViewModel course)
         {
