@@ -31,7 +31,9 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
+#if DEBUG
+        [AllowAnonymous]
+#endif
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] SessionViewModel session)
         {
@@ -53,7 +55,16 @@ namespace WebApi.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int sessionId)
         {
-            return Ok();
+            try
+            {
+                var result = await _mediator.Send(new DeleteSession(sessionId));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+           
         }
     }
 }

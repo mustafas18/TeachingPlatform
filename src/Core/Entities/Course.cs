@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿using Core.Enums;
+using Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,6 +15,7 @@ namespace Core.Entities
         public string TitleEn { get; set; }
         public CourseCategory Category { get; set; }
         public string Description { get; set; }
+        public CourseLevel Level { get; set; }
         public int Price { get; set; }
         /// <summary>
         /// Duriation in second

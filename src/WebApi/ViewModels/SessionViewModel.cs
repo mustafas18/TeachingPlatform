@@ -1,14 +1,14 @@
 ﻿using Core.Enums;
 
 namespace WebApi.ViewModels
-{
+{ 
     public class SessionViewModel
     {
         public int Id { get; set; }
         public string TitleFa { get; set; }
         public string TitleEn { get; set; }
         public int CourseId { get; set; }
-        //public Section Section { get; set; }
+       public string Description { get; set; }
         public SessionType SessionType { get; set; } = SessionType.Video;
         /// <summary>
         /// Duriation in second

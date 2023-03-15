@@ -1,5 +1,6 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Core.Specifications;
 using MediatR;
 
 namespace WebApi.Commands.CourseSessions
@@ -7,31 +8,34 @@ namespace WebApi.Commands.CourseSessions
     public class CreateSessionHandler : IRequestHandler<CreateSession, Session>
     {
         private readonly IReadRepository<Course> _courseReadRepository;
-        private readonly IRepository<Session> _sessionRepo;
+        private readonly IRepository<Course> _courseRepo;
 
         public CreateSessionHandler(IReadRepository<Course> courseReadRepository,
-            IRepository<Session> sessionRepo)
+            IRepository<Course> courseRepo)
         {
             _courseReadRepository = courseReadRepository;
-            _sessionRepo = sessionRepo;
+            _courseRepo = courseRepo;
         }
-        public Task<Session> Handle(CreateSession request, CancellationToken cancellationToken)
+        public async Task<Session> Handle(CreateSession request, CancellationToken cancellationToken)
         {
-            var course = _courseReadRepository.GetByIdAsync(request.Session.CourseId).Result;
 
             var session = new Session
             {
+                Description = request.Session.Description,
                 SessionType = request.Session.SessionType,
                 Thumbnail = request.Session.Thumbnail,
                 TitleEn = request.Session.TitleEn,
                 TitleFa = request.Session.TitleFa,
-                Course = course,
                 Duration = request.Session.Duration,
                 OrderNumber = request.Session.OrderNumber,
                 ResourceUri = request.Session.ResourceUri,
             };
-            _sessionRepo.AddAsync(session);
-            return Task.FromResult(session);
+            var course = _courseRepo
+                .Include("Sessions")
+                .FirstOrDefault(p => p.Id == request.Session.CourseId);
+            course.Sessions.Add(session);
+            await _courseRepo.UpdateAsync(course);
+            return session;
         }
     }
 }

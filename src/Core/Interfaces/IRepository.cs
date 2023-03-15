@@ -11,9 +11,13 @@ namespace Core.Interfaces
     public interface IRepository<TEntity> where TEntity : class
     {
         Task AddAsync(TEntity entity);
+        Task<TEntity> UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
         IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "",
             int first = 0, int offset = 0);
+        TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null);
+        IQueryable<TEntity> Include(string entityName);
     }
 }

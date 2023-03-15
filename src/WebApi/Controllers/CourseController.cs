@@ -39,12 +39,27 @@ namespace WebApi.Controllers
             try
             {
                 var course = await _mediator.Send(new GetCourse(courseId));
-                course.Sessions.ForEach(p => { p.Course = null; });
+                course?.Sessions.ForEach(p => { p.Course = null; });
                 return Ok(course);
             }
             catch(Exception ex)
             {
                return StatusCode(500, ex.Message);
+            }
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetSessionsByCourseId(int courseId)
+        {
+            try
+            {
+                var sessions = await _mediator.Send(new GetSessions(courseId));
+                return Ok(sessions);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
 
         }
@@ -65,7 +80,15 @@ namespace WebApi.Controllers
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Course course)
         {
-            return Ok();
+            try
+            {
+                var result = await _mediator.Send(new UpdateCourse(course));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
         }
         [HttpDelete]
         public async Task<IActionResult> Delete(int courseId)

@@ -1,4 +1,5 @@
 ﻿using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
@@ -29,10 +30,24 @@ namespace Infrastructure.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public Task DeleteAsync(TEntity entity)
+        {
+            _context.Remove(entity); 
+            return Task.CompletedTask;
+        }
+
         public List<TEntity> GetAll()
         {
             return _context.Set<TEntity>().ToList();
         }
+
+        public async Task<TEntity> UpdateAsync(TEntity entity)
+        {
+           _context.Set<TEntity>().Update(entity);
+           await _context.SaveChangesAsync();
+            return entity;
+        }
+
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
                             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                             string includeProperties = "",
@@ -46,7 +61,20 @@ namespace Infrastructure.Data.Repositories
 
 
         }
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter != null)
+            {
+                return _context.Set<TEntity>().FirstOrDefault(filter);
+            }
+            return _context.Set<TEntity>().FirstOrDefault();
 
 
+        }
+
+        public IQueryable<TEntity> Include(string entityName)
+        {
+            return _context.Set<TEntity>().Include(entityName);
+        }
     }
 }
