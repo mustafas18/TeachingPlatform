@@ -9,7 +9,7 @@ The platform has the following features
 
 ## Technical Description
 
-The project have a monolithic architecture. The domain-driven design approach is applied to the project.
+The project has a monolithic architecture. The domain-driven design approach is applied to the project.
 
 In the project, clients send requests to command services via MediatR. 
 The command patern decouple classes that invoke operations from classes that perform these operations. As a result it improves single responsibility principle. 
