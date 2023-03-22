@@ -53,7 +53,7 @@ namespace WebApi
                 opt.AddPolicy("myCorsPolicy", policy =>
                 {
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200",
-                                                                            "http://example.com");
+                        "https://localhost:7233");
                 });
             });
 
