@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         [AllowAnonymous]
 #endif
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] SessionViewModel session)
+        public async Task<IActionResult> Create([FromBody] SessionViewModel  session)
         {
             try
             {
