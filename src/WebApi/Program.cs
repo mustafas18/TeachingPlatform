@@ -52,8 +52,7 @@ namespace WebApi
             {
                 opt.AddPolicy("myCorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200",
-                        "https://localhost:7233");
+                    policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                 });
             });
 
@@ -124,6 +123,7 @@ namespace WebApi
 
 
             var app = builder.Build();
+            app.UseCors("myCorsPolicy");
 
             using (var scope = app.Services.CreateScope())
             {

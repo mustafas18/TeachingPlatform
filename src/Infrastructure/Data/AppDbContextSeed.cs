@@ -13,24 +13,31 @@ namespace Infrastructure.Data
     {
         public static async Task SeedAsync(AppDbContext dbContext, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-  
-            await roleManager.CreateAsync(new IdentityRole("admin"));
-            await roleManager.CreateAsync(new IdentityRole("teacher"));
-            await roleManager.CreateAsync(new IdentityRole("student"));
+            try
+            {
+				await roleManager.CreateAsync(new IdentityRole("admin"));
+				await roleManager.CreateAsync(new IdentityRole("teacher"));
+				await roleManager.CreateAsync(new IdentityRole("student"));
 
-            string defaultUserName = "zahra_bazghandi";
-            var defaultUser = new AppUser { UserName = defaultUserName, Email = "bazghandizahra@ielts.ir" };
-            await userManager.CreateAsync(defaultUser, "P@ssw0rd");
-            defaultUser = await userManager.FindByNameAsync(defaultUserName);
-            await userManager.AddToRoleAsync(defaultUser, "admin");
-            await userManager.AddToRoleAsync(defaultUser, "teacher");
+				string defaultUserName = "zahra_bazghandi";
+				var defaultUser = new AppUser { UserName = defaultUserName, Email = "bazghandizahra@ielts.ir" };
+				await userManager.CreateAsync(defaultUser, "P@ssw0rd");
+				defaultUser = await userManager.FindByNameAsync(defaultUserName);
+				await userManager.AddToRoleAsync(defaultUser, "admin");
+				await userManager.AddToRoleAsync(defaultUser, "teacher");
 
-            //string adminUserName = "mustafas18";
-            //var adminUser = new AppUser { UserName = adminUserName, Email = "mustafa_bazghandi@yahoo.com" };
-            //await userManager.CreateAsync(adminUser, "P@ssw0rd");
-            //adminUser = await userManager.FindByNameAsync(adminUserName);
-            //await userManager.AddToRoleAsync(adminUser, "admin");
-            //await userManager.AddToRoleAsync(adminUser, "student");
+				//string adminUserName = "mustafas18";
+				//var adminUser = new AppUser { UserName = adminUserName, Email = "mustafa_bazghandi@yahoo.com" };
+				//await userManager.CreateAsync(adminUser, "P@ssw0rd");
+				//adminUser = await userManager.FindByNameAsync(adminUserName);
+				//await userManager.AddToRoleAsync(adminUser, "admin");
+				//await userManager.AddToRoleAsync(adminUser, "student");
+			}
+			catch (Exception ex)
+            {
+                Console.WriteLine($"Error: Can not seed database. {ex.Message}");
+            }
+          
         }
     }
 }

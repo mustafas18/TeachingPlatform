@@ -22,13 +22,16 @@ namespace WebApi.Commands.Courses
             var courses = await _courseRepository.ListAsync(specification, cancellationToken);
             return courses.Select(c => new CourseViewModel
             {
-                Id= c.Id,
+                Id = c.Id,
                 CreatedTime = c.CreatedTime,
                 Price = c.Price,
                 Thumbnail = c.Thumbnail,
                 TitleEn = c.TitleEn,
                 TitleFa = c.TitleFa,
+                Duration = $"{c.Duration / 60} دقیقه",
+                Level = c.Level.ToString()
             });
+            ;
         }
     }
 }
