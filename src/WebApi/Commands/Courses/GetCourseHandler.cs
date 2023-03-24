@@ -3,6 +3,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WebApi.ViewModels;
 
 namespace WebApi.Commands.Courses
@@ -17,7 +18,9 @@ namespace WebApi.Commands.Courses
         }
         public async Task<Course> Handle(GetCourse request, CancellationToken cancellationToken)
         {
-            var course = await _courseRepository.CourseWithSession(request.CourseId);
+            var course = await _courseRepository
+                .Include("Sessions")
+                .FirstOrDefaultAsync(p=>p.Id== request.CourseId);
             return course;
         }
     }

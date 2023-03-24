@@ -34,15 +34,37 @@ namespace Infrastructure.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Course> CourseWithSession(int id)
+        public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null,
+                                   Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                   string includeProperties = "")
         {
-            return await _context.Courses.Include(p => p.Sessions)
-                .FirstOrDefaultAsync(p => p.Id == id);
-        }
+            if (filter != null)
+            {
+                return _context.Set<TEntity>().FirstOrDefault(filter);
+            }
+            return null;
 
+
+        }
+        public async Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter != null)
+            {
+                return await _context.Set<TEntity>().FirstOrDefaultAsync(filter);
+            }
+            return null;
+
+
+        }
         public List<TEntity> GetAll()
         {
             return _context.Set<TEntity>().ToList();
         }
+        public IQueryable<TEntity> Include(string entityName)
+        {
+            return _context.Set<TEntity>().Include(entityName);
+        }
+
+
     }
 }

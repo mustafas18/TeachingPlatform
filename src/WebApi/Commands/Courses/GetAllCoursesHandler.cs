@@ -3,6 +3,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Commands.TeachingRequest;
 using WebApi.ViewModels;
 
@@ -18,8 +19,7 @@ namespace WebApi.Commands.Courses
         }
         public async Task<IEnumerable<CourseViewModel>> Handle(GetAllCourses request, CancellationToken cancellationToken)
         {
-            var specification = new CourseListSpecification();
-            var courses = await _courseRepository.ListAsync(specification, cancellationToken);
+            var courses = await _courseRepository.Include("Teacher").ToListAsync();
             return courses.Select(c => new CourseViewModel
             {
                 Id = c.Id,
@@ -28,6 +28,7 @@ namespace WebApi.Commands.Courses
                 Thumbnail = c.Thumbnail,
                 TitleEn = c.TitleEn,
                 TitleFa = c.TitleFa,
+                Teacher=c.Teacher.FullNameFa,
                 Duration = $"{c.Duration / 60} دقیقه",
                 Level = c.Level.ToString()
             });

@@ -25,7 +25,7 @@ namespace WebApi.Commands.Courses
             var teacher = _teacherReadRepo.GetByIdAsync(request.CourseCreate.TeacherId).Result;
 
             // Save thumbnails as file
-            //var fileExtension = System.IO.Path.GetExtension(request.CourseCreate.Thumbnail.FileName);
+            var fileExtension = System.IO.Path.GetExtension(request.CourseCreate.Thumbnail.FileName)?.ToLower().Replace(".","");
             //var fileName = $"Course_{Guid.NewGuid()}{fileExtension}";
             //string filePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", fileName);
 
@@ -39,7 +39,7 @@ namespace WebApi.Commands.Courses
             //Save thumbnails as base64
             using var memoryStream = new MemoryStream();
                  request.CourseCreate.Thumbnail.CopyToAsync(memoryStream);
-               var thumbnail = Convert.ToBase64String(memoryStream.ToArray());
+               var thumbnail = $"data:image/{fileExtension};base64,{ Convert.ToBase64String(memoryStream.ToArray())}";
 
             var course = new Course
             {
@@ -51,7 +51,8 @@ namespace WebApi.Commands.Courses
                 Thumbnail = thumbnail,
                 TitleEn = request.CourseCreate.TitleEn,
                 TitleFa = request.CourseCreate.TitleFa,
-                Teacher = teacher
+                Teacher = teacher,
+                
             };
          _courseRepository.AddAsync(course);
             return course;
