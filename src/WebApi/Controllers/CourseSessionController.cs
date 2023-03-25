@@ -17,7 +17,6 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
         [AllowAnonymous]
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         public async Task<IActionResult> GetbySessionId(int sessionId)
         {
@@ -35,6 +34,7 @@ namespace WebApi.Controllers
 #if DEBUG
         [AllowAnonymous]
 #endif
+        [Authorize(Roles = "admin,teacher")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] SessionViewModel  session)
         {
@@ -48,11 +48,13 @@ namespace WebApi.Controllers
                return StatusCode(500,ex.Message);
             }
         }
+        [Authorize(Roles = "admin,teacher")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Session session)
         {
             return Ok();
         }
+        [Authorize(Roles = "admin,teacher")]
         [HttpDelete]
         public async Task<IActionResult> Delete(int sessionId)
         {

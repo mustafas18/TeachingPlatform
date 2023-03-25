@@ -49,7 +49,7 @@ namespace WebApi.Controllers
             }
 
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetSessionsByCourseId(int courseId)
         {
@@ -67,6 +67,7 @@ namespace WebApi.Controllers
 #if DEBUG
         [AllowAnonymous]
 #endif
+        [Authorize(Roles = "admin,teacher")]
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CourseCreateViewModel course)
         {
@@ -81,6 +82,7 @@ namespace WebApi.Controllers
             }
 
         }
+        [Authorize(Roles = "admin,teacher")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] Course course)
         {
@@ -94,6 +96,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [Authorize(Roles = "admin,teacher")]
         [HttpDelete]
         public async Task<IActionResult> Delete(int courseId)
         {
