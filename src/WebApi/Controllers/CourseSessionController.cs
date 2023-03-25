@@ -17,6 +17,7 @@ namespace WebApi.Controllers
             _mediator = mediator;
         }
         [AllowAnonymous]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         public async Task<IActionResult> GetbySessionId(int sessionId)
         {

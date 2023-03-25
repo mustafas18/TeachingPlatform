@@ -117,13 +117,18 @@ namespace WebApi
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(AppConstants.securityKey))
                 };
             });
+            builder.Services.AddResponseCaching();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddControllers();
           
 
 
             var app = builder.Build();
+
+            // UseCors must be called before UseResponseCaching
             app.UseCors("myCorsPolicy");
+
+            app.UseResponseCaching();
 
             using (var scope = app.Services.CreateScope())
             {
