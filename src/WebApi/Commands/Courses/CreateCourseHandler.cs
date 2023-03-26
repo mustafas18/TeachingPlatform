@@ -50,8 +50,9 @@ namespace WebApi.Commands.Courses
                 TitleEn = request.CourseCreate.TitleEn,
                 TitleFa = request.CourseCreate.TitleFa,
                 Teacher = teacher,
+                Sessions=request.CourseCreate.Sessions
             };
-         _courseRepository.AddAsync(course);
+            _courseRepository.AddAsync(course);
             return course;
         }
     }

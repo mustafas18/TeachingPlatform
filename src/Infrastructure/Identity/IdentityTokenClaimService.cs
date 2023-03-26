@@ -25,7 +25,17 @@ namespace Infrastructure.Identity
         {
             _userManager = userManager;
         }
-
+        public async Task<List<string>> GetUserRolesAsync(string userName)
+        {
+            var user = await _userManager.FindByNameAsync(userName);
+            var roles = await _userManager.GetRolesAsync(user);
+            List<string> result=new();
+            foreach (var role in roles)
+            {
+                result.Add(role);
+            }
+            return result;
+        }
         public async Task<string> GetTokenAsync(LoginInfoDto loginInfo)
         {
             var user = await _userManager.FindByNameAsync(loginInfo.UserName);

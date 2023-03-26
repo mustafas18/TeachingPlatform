@@ -4,7 +4,7 @@ using MediatR;
 
 namespace WebApi.Commands.Courses
 {
-    public class UpdateCourseHandler : IRequestHandler<CreateCourse, Course>
+    public class UpdateCourseHandler : IRequestHandler<UpdateCourse, Course>
     {
         private readonly IRepository<Course> _courseRepository;
         private readonly IReadRepository<CourseCategory> _categoryReadRepo;
@@ -18,20 +18,21 @@ namespace WebApi.Commands.Courses
             _categoryReadRepo = categoryReadRepo;
             _teacherReadRepo = teacherReadRepo;
         }
-        public async Task<Course> Handle(CreateCourse request, CancellationToken cancellationToken)
-        {
-            var category = _categoryReadRepo.GetByIdAsync(request.CourseCreate.CategoryId).Result;
-            var teacher = _teacherReadRepo.GetByIdAsync(request.CourseCreate.TeacherId).Result;
 
-            var course= _courseRepository.Where(p=>p.Id==request.CourseCreate.Id).FirstOrDefault();
+        public async Task<Course> Handle(UpdateCourse request, CancellationToken cancellationToken)
+        {
+            var category = _categoryReadRepo.GetByIdAsync(request.Course.CategoryId).Result;
+            var teacher = _teacherReadRepo.GetByIdAsync(request.Course.TeacherId).Result;
+
+            var course = _courseRepository.Where(p => p.Id == request.Course.Id).FirstOrDefault();
 
             string thumbnail = string.Empty;
-            if (request.CourseCreate.ThumbnailBase46 != null)
+            if (request.Course.ThumbnailBase46 != null)
             {
                 //using var memoryStream = new MemoryStream();
                 //request.CourseCreate.Thumbnail.CopyToAsync(memoryStream);
                 //thumbnail = Convert.ToBase64String(memoryStream.ToArray());
-                thumbnail = request.CourseCreate.ThumbnailBase46;
+                thumbnail = request.Course.ThumbnailBase46;
             }
             else
             {
@@ -40,15 +41,16 @@ namespace WebApi.Commands.Courses
 
 
             course.Category = category;
-            course.Description = request.CourseCreate.Description;
-            course.Duration = request.CourseCreate.Duration;
-            course.Price = request.CourseCreate.Price;
+            course.Description = request.Course.Description;
+            course.Duration = request.Course.Duration;
+            course.Price = request.Course.Price;
             course.Thumbnail = thumbnail;
-            course.TitleEn = request.CourseCreate.TitleEn;
-            course.TitleFa = request.CourseCreate.TitleFa;
+            course.TitleEn = request.Course.TitleEn;
+            course.TitleFa = request.Course.TitleFa;
             course.Teacher = teacher;
+            course.Sessions = request.Course.Sessions;
 
-         await   _courseRepository.UpdateAsync(course);
+            await _courseRepository.UpdateAsync(course);
 
             return course;
         }

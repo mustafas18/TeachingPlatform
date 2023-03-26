@@ -11,6 +11,7 @@ namespace WebApi.ViewModels
         public int CategoryId { get; set; }
         public int TeacherId { get; set; }
         public string Description { get; set; }
+        public List<Session> Sessions { get; set; }
         public int Price { get; set; }
         /// <summary>
         /// Duriation in second
