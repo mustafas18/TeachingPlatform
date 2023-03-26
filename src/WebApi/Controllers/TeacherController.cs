@@ -31,7 +31,7 @@ namespace WebApi.Controllers
 
         }
         [Authorize(Roles = "admin")]
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Create([FromBody] Teacher course)
         {
             return StatusCode(501, "Not Implemented");
