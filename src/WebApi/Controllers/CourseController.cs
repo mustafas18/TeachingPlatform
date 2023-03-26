@@ -69,7 +69,7 @@ namespace WebApi.Controllers
 #endif
         [Authorize(Roles = "admin,teacher")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] CourseCreateViewModel course)
+        public async Task<IActionResult> Create([FromBody] CourseCreateViewModel course)
         {
             try
             {

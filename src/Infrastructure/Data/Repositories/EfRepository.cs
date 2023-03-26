@@ -60,6 +60,10 @@ namespace Infrastructure.Data.Repositories
         {
             return _context.Set<TEntity>().ToList();
         }
+        public async  Task<List<TEntity>> GetAllAsync()
+        {
+            return await _context.Set<TEntity>().ToListAsync();
+        }
         public IQueryable<TEntity> Include(string entityName)
         {
             return _context.Set<TEntity>().Include(entityName);

@@ -13,6 +13,7 @@ namespace Core.Interfaces
     public interface IReadRepository<T> : IReadRepositoryBase<T> where T : class, IAggregateRoot
     {
         List<T> GetAll();
+        Task<List<T>> GetAllAsync();
         IQueryable<T> Include(string entityName);
         T FirstOrDefault(Expression<Func<T, bool>> filter = null,
                                    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,

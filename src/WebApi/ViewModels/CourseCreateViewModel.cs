@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Enums;
 
 namespace WebApi.ViewModels
 {
@@ -15,7 +16,9 @@ namespace WebApi.ViewModels
         /// Duriation in second
         /// </summary>
         public int Duration { get; set; }
+        public CourseLevel Level { get; set; }
         public IFormFile Thumbnail { get; set; }
+        public string ThumbnailBase46 { get; set; }
         public DateTime CreatedTime { get; set; }
     }
 }
