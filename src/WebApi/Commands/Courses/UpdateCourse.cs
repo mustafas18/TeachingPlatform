@@ -1,15 +1,16 @@
 ﻿using Core.Entities;
 using MediatR;
+using WebApi.ViewModels;
 
 namespace WebApi.Commands.Courses
 {
     public class UpdateCourse:IRequest<Course>
     {
-        public UpdateCourse(Course course)
+        public UpdateCourse(CourseCreateViewModel course)
         {
             Course = course;
         }
 
-        public Course Course { get; }
+        public CourseCreateViewModel Course { get; }
     }
 }

@@ -20,6 +20,7 @@ namespace WebApi.Commands.Courses
         {
             var course = await _courseRepository
                 .Include("Sessions")
+                .Include("Teacher")
                 .FirstOrDefaultAsync(p=>p.Id== request.CourseId);
             return course;
         }

@@ -26,11 +26,12 @@ namespace WebApi.Commands.Courses
             var course= _courseRepository.Where(p=>p.Id==request.CourseCreate.Id).FirstOrDefault();
 
             string thumbnail = string.Empty;
-            if (request.CourseCreate.Thumbnail != null)
+            if (request.CourseCreate.ThumbnailBase46 != null)
             {
-                using var memoryStream = new MemoryStream();
-                request.CourseCreate.Thumbnail.CopyToAsync(memoryStream);
-                thumbnail = Convert.ToBase64String(memoryStream.ToArray());
+                //using var memoryStream = new MemoryStream();
+                //request.CourseCreate.Thumbnail.CopyToAsync(memoryStream);
+                //thumbnail = Convert.ToBase64String(memoryStream.ToArray());
+                thumbnail = request.CourseCreate.ThumbnailBase46;
             }
             else
             {

@@ -84,7 +84,7 @@ namespace WebApi.Controllers
         }
         [Authorize(Roles = "admin,teacher")]
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Course course)
+        public async Task<IActionResult> Update([FromBody] CourseCreateViewModel course)
         {
             try
             {

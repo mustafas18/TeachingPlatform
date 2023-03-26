@@ -17,7 +17,7 @@ namespace WebApi.ViewModels
         /// </summary>
         public int Duration { get; set; }
         public CourseLevel Level { get; set; }
-        public IFormFile Thumbnail { get; set; }
+        public string? ThumbnailUri { get; set; }
         public string ThumbnailBase46 { get; set; }
         public DateTime CreatedTime { get; set; }
     }
