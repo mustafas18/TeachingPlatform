@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using System.Net;
 using System.Security.Claims;
 using WebApi.Commands.Account;
 using WebApi.ViewModels.Acconut;
@@ -24,13 +25,13 @@ namespace WebApi.Controllers
         {
             _mediator = mediator;
         }
-        [Authorize(Roles="admin,teacher")]
+        [Authorize(Roles = "admin,teacher")]
         [HttpGet]
         public async Task<IActionResult> GetUserInfo(string userName)
         {
             try
             {
-                var result =await _mediator.Send(new GetUser(userName));
+                var result = await _mediator.Send(new GetUser(userName));
                 return Ok(new UserInfoViewModel
                 {
                     FullNameEn = result.FullNameEn,
@@ -39,7 +40,7 @@ namespace WebApi.Controllers
                     Picture = result.Picture
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
@@ -54,9 +55,9 @@ namespace WebApi.Controllers
                 var result = await _mediator.Send(new RegisterUser(register));
                 return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                return StatusCode(500,ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 
@@ -75,9 +76,36 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                if (identity != null)
+                {
+                    var userClaims = identity.Claims;
+                    return Ok(new CurrentUserViewModel
+                    {
+                        UserName = userClaims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value,
+                        Role = userClaims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value
+                    });
+                }
 
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(HttpStatusCode.InternalServerError, ex.Message);
+            }
 
-
+        }
 
     }
+
+
+
+}
 }
