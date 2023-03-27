@@ -69,6 +69,19 @@ namespace Infrastructure.Data.Repositories
             return _context.Set<TEntity>().Include(entityName);
         }
 
+        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
+                            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                            string includeProperties = "",
+                            int first = 0, int offset = 0)
+        {
+            if (filter != null)
+            {
+                return _context.Set<TEntity>().Where(filter);
+            }
+            return null;
+
+
+        }
 
     }
 }

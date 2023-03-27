@@ -30,10 +30,10 @@ namespace Infrastructure.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(TEntity entity)
+        public async Task DeleteAsync(TEntity entity)
         {
-            _context.Remove(entity); 
-            return Task.CompletedTask;
+            _context.Remove(entity);
+            await _context.SaveChangesAsync();
         }
 
         public List<TEntity> GetAll()

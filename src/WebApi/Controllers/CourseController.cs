@@ -40,7 +40,7 @@ namespace WebApi.Controllers
             try
             {
                 var course = await _mediator.Send(new GetCourse(courseId));
-                course?.Sessions.ForEach(p => { p.Course = null; });
+                //course?.Sessions.ForEach(p => { p.Course = null; });
                 return Ok(course);
             }
             catch(Exception ex)
