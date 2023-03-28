@@ -76,7 +76,6 @@ namespace WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetCurrentUser()
@@ -94,11 +93,11 @@ namespace WebApi.Controllers
                     });
                 }
 
-                return null;
+                return Ok(new CurrentUserViewModel());
             }
             catch (Exception ex)
             {
-                return StatusCode(HttpStatusCode.InternalServerError, ex.Message);
+                return StatusCode(500, ex.Message);
             }
 
         }
@@ -107,5 +106,4 @@ namespace WebApi.Controllers
 
 
 
-}
 }
