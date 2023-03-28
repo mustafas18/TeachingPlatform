@@ -10,17 +10,20 @@ namespace WebApi.Commands.Account
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly IMediator _mediator;
+        private readonly IRepository<Student> _repository;
 
         public RegisterUserHandler(UserManager<AppUser> userManager,
-            IMediator mediator)
+            IMediator mediator,
+            IRepository<Student> repository)
         {
             _userManager = userManager;
             _mediator = mediator;
+            _repository = repository;
         }
         public async Task<AppUser> Handle(RegisterUser request, CancellationToken cancellationToken)
         {
             var result = _mediator.Send(new GetUser(request.Register.UserName));
-            if (result == null)
+            if (result.Result == null)
             {
 
                 AppUser newUser = new AppUser();
@@ -28,6 +31,8 @@ namespace WebApi.Commands.Account
 
                 await _userManager.CreateAsync(newUser, request.Register.Password);
                 await _userManager.AddToRoleAsync(newUser, "student");
+
+                await _repository.AddAsync(new Student(newUser.UserName));
 
                 return newUser;
             }

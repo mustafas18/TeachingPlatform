@@ -26,7 +26,7 @@ namespace Core.Entities
         //[InverseProperty(nameof(Course))]
         //public ICollection<Section> Sections { get; set; }
         public virtual List<Session> Sessions { get; set; }
-        public ICollection<Student> Students { get; set; }
+        public List<Student> Students { get; set; }
         public Teacher Teacher { get; set; }
         public DateTime CreatedTime { get; set; }
 
