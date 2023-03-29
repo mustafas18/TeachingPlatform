@@ -34,7 +34,7 @@ namespace WebApi.Controllers
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> SignUpInCourse([FromBody] SignUpCourseViewModel signUpCourse)
+        public async Task<IActionResult> SignUpInCourse([FromBody] CourseStudentViewModel signUpCourse)
         {
             try
             {
@@ -42,6 +42,21 @@ namespace WebApi.Controllers
                 return Ok(result);
             }
             catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> IsStudent([FromBody] CourseStudentViewModel studentCourse)
+        {
+            try
+            {
+                var result = await _mediatR.Send(new IsCourseStudent(studentCourse));
+                return Ok(result);
+            }
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
