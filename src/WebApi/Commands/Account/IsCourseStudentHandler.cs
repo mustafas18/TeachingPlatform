@@ -19,7 +19,7 @@ namespace WebApi.Commands.Account
         {
             var courseId = request.CourseStudent.CourseId;
             var course= _courseRepository
-                  .Include("Student").FirstOrDefault(s => s.Id== courseId);
+                  .Include("Students").FirstOrDefault(s => s.Id== courseId);
             var student = _studentRepository
                 .Include("Courses")
                 .FirstOrDefault(p => p.UserName == request.CourseStudent.UserName);
