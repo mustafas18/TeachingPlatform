@@ -78,6 +78,20 @@ namespace WebApi.Controllers
         }
         [AllowAnonymous]
         [HttpGet]
+        public async Task<IActionResult> SignOut()
+        {
+            try
+            {
+                var result = await _mediator.Send(new SignOut());
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [AllowAnonymous]
+        [HttpGet]
         public async Task<IActionResult> GetCurrentUser()
         {
             try
