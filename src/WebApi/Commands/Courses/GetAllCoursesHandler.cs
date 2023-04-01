@@ -29,8 +29,8 @@ namespace WebApi.Commands.Courses
                 TitleEn = c.TitleEn,
                 TitleFa = c.TitleFa,
                 Teacher=c.Teacher.FullNameFa,
-                Duration = $"{c.Duration / 60} دقیقه",
-                Level = c.Level.ToString()
+                Duration = (int)(c.Duration / 360) == 0 ? $"{(int)(c.Duration / 60)} دقیقه" : $"{(int)(c.Duration / 360)} ساعت و {(int)((c.Duration % 360) / 60)} دقیقه",
+                Level = (int)c.Level
             });
             ;
         }

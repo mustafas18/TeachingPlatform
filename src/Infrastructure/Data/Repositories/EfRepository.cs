@@ -1,5 +1,6 @@
 ﻿using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
+using Azure.Core;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,7 @@ namespace Infrastructure.Data.Repositories
             _context.Set<TEntity>().Add(entity);
             await _context.SaveChangesAsync();
         }
+
 
         public TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null,
                                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
@@ -68,6 +70,7 @@ namespace Infrastructure.Data.Repositories
         {
             return _context.Set<TEntity>().Include(entityName);
         }
+
 
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
                             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,

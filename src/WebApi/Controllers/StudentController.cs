@@ -48,12 +48,31 @@ namespace WebApi.Controllers
 
         }
         [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetCoursesByStudentName(string studentUserName)
+        {
+            try
+            {
+                var result = await _mediatR.Send(new GetStudentCourses(studentUserName));
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        /// <summary>
+        /// Check if the user is a student of the course.
+        /// </summary>
+        /// <param name="studentCourse"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> IsStudent([FromBody] CourseStudentViewModel studentCourse)
         {
             try
             {
-                var result = await _mediatR.Send(new IsCourseStudent(studentCourse));
+                var result = await _mediatR.Send(new CheckCourseStudent(studentCourse));
                 return Ok(result);
             }
             catch (Exception ex)

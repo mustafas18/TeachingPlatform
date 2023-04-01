@@ -3,9 +3,9 @@ using WebApi.ViewModels.Acconut;
 
 namespace WebApi.Commands.Account
 {
-    public class IsCourseStudent:IRequest<bool>
+    public class CheckCourseStudent : IRequest<bool>
     {
-        public IsCourseStudent(CourseStudentViewModel courseStudent)
+        public CheckCourseStudent(CourseStudentViewModel courseStudent)
         {
             CourseStudent = courseStudent;
         }

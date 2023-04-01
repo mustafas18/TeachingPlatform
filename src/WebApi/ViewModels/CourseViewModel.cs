@@ -11,7 +11,7 @@ namespace WebApi.ViewModels
         public int Price { get; set; }
         public string Duration { get; set; }
         public string Teacher { get; set; }
-        public string Level { get; set; }
+        public int Level { get; set; }
         public string Thumbnail { get; set; }
         public DateTime CreatedTime { get; set; }
     }

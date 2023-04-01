@@ -4,18 +4,18 @@ using MediatR;
 
 namespace WebApi.Commands.Account
 {
-    public class IsCourseStudentHandler : IRequestHandler<IsCourseStudent, bool>
+    public class CheckCourseStudentHandler : IRequestHandler<CheckCourseStudent, bool>
     {
         private readonly IReadRepository<Course> _courseRepository;
         private readonly IReadRepository<Student> _studentRepository;
 
-        public IsCourseStudentHandler(IReadRepository<Course> courseRepository,
+        public CheckCourseStudentHandler(IReadRepository<Course> courseRepository,
             IReadRepository<Student> studentRepository)
         {
             _courseRepository = courseRepository;
             _studentRepository = studentRepository;
         }
-        public async Task<bool> Handle(IsCourseStudent request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CheckCourseStudent request, CancellationToken cancellationToken)
         {
             var courseId = request.CourseStudent.CourseId;
             var course= _courseRepository
