@@ -15,5 +15,7 @@ namespace WebApi.ViewModels
         public string? Description { get; set; }
         public string RequestGuid { get; set; }
         public OrderStatus Status { get; set; }
+        public Lesson Lesson { get; set; }
+        public Student Student { get; set; }
     }
 }
