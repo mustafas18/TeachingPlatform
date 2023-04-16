@@ -45,12 +45,13 @@ namespace WebApi.Commands.Courses
                 CreatedTime = DateTime.UtcNow,
                 Description = request.CourseCreate.Description,
                 Duration = request.CourseCreate.Duration,
+                 Level= request.CourseCreate.Level,
                 Price = request.CourseCreate.Price,
                 Thumbnail = request.CourseCreate.ThumbnailBase46,
                 TitleEn = request.CourseCreate.TitleEn,
                 TitleFa = request.CourseCreate.TitleFa,
                 Teacher = teacher,
-                Sessions=request.CourseCreate.Sessions
+               // Sessions=request.CourseCreate.Sessions
             };
             _courseRepository.AddAsync(course);
             return course;

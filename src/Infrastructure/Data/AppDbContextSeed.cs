@@ -21,7 +21,7 @@ namespace Infrastructure.Data
 
 				string defaultUserName = "zahra_bazghandi";
 				var defaultUser = new AppUser { UserName = defaultUserName, Email = "bazghandizahra@ielts.ir" };
-				await userManager.CreateAsync(defaultUser, "P@ssw0rd");
+				await userManager.CreateAsync(defaultUser, "P@ssword");
 				defaultUser = await userManager.FindByNameAsync(defaultUserName);
 				await userManager.AddToRoleAsync(defaultUser, "admin");
 				await userManager.AddToRoleAsync(defaultUser, "teacher");

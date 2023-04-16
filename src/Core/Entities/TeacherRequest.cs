@@ -13,22 +13,25 @@ namespace Core.Entities
 {
     public class TeacherRequest : BaseEntity, IAggregateRoot
     {
-        public TeacherRequest() 
+        public TeacherRequest()
         {
 
         }
-        public TeacherRequest(Student student, Teacher teacher, TeachType type, Lesson lesson, OrderStatus status)
+        public TeacherRequest(Student student,  Lesson lesson, OrderStatus status)
         {
             Student = student;
-            Teacher = teacher;
-            Type = type;
             Lesson = lesson;
             Status = status;
         }
         public Student Student { get; set; }
         public Teacher Teacher { get; set; }
         public TeachType Type { get; set; }
+        public string Place { get; set; }
         public Lesson Lesson { get; set; }
+        public string? Description { get; set; }
+        public int Price { get; set; }
+        public string RequestGuid { get; set; }
+        public DateTime RequestTime = DateTime.Now;
         public OrderStatus Status { get; set; }
     }
 }

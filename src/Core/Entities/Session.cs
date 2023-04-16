@@ -20,6 +20,7 @@ namespace Core.Entities
         /// </summary>
         public int Duration { get; set; }
         public string Thumbnail { get; set; }
+        public ResourseEnum ResourseType { get; set; }
         public string ResourceUri { get; set; }
         public int OrderNumber { get; set; }
         public SessionStatus Status { get; set; }

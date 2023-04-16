@@ -23,8 +23,9 @@ namespace Core.Entities
         public string UserName { get; set; }
         public string FullNameFa { get; set; }
         public string FullNameEn { get; set; }
-        [InverseProperty(nameof(Teacher))]
-        public virtual ICollection<TeacherRequest> TeacherRequests { get; set; }
+        public string Mobile { get; set; }
+        public string Email { get; set; }
+        public int Reputation { get; set; } = 10;
     }
 }
 

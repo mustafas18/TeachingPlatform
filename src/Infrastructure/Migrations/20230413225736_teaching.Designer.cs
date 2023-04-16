@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230413225736_teaching")]
+    partial class teaching
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -160,9 +163,9 @@ namespace Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "IELTS",
-                            NameEn = "IELTS",
-                            NameFa = "IELTS"
+                            Description = "IELTS Speaking",
+                            NameEn = "IELTS Speaking",
+                            NameFa = "IELTS Speaking"
                         },
                         new
                         {
@@ -267,9 +270,6 @@ namespace Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Reputation")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -286,7 +286,6 @@ namespace Infrastructure.Migrations
                             FullNameEn = "Zahra Bazghandi",
                             FullNameFa = "زهرا بازقندی",
                             Mobile = "09155727952",
-                            Reputation = 10,
                             UserName = "zahra_bazghandi"
                         });
                 });
@@ -300,6 +299,7 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LessonId")
@@ -308,9 +308,6 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Place")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
 
                     b.Property<string>("RequestGuid")
                         .IsRequired()
@@ -322,7 +319,7 @@ namespace Infrastructure.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TeacherId")
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.Property<int>("Type")
@@ -629,22 +626,18 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Core.Entities.Student", "Student")
-                        .WithMany()
+                        .WithMany("TeacherRequests")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Entities.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Core.Entities.Teacher", null)
+                        .WithMany("TeacherRequests")
+                        .HasForeignKey("TeacherId");
 
                     b.Navigation("Lesson");
 
                     b.Navigation("Student");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
@@ -716,6 +709,16 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Core.Entities.Course", b =>
                 {
                     b.Navigation("Sessions");
+                });
+
+            modelBuilder.Entity("Core.Entities.Student", b =>
+                {
+                    b.Navigation("TeacherRequests");
+                });
+
+            modelBuilder.Entity("Core.Entities.Teacher", b =>
+                {
+                    b.Navigation("TeacherRequests");
                 });
 #pragma warning restore 612, 618
         }

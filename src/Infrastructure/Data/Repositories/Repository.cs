@@ -1,4 +1,5 @@
-﻿using Core.Interfaces;
+﻿using Core.Entities;
+using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
@@ -43,8 +44,21 @@ namespace Infrastructure.Data.Repositories
 
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
-           _context.Set<TEntity>().Update(entity);
-           await _context.SaveChangesAsync();
+            //try
+            //{
+                _context.Set<TEntity>().Update(entity);
+                await _context.SaveChangesAsync();
+            return entity;
+            //}
+            //catch (DbUpdateConcurrencyException ex)
+            //{
+            //    if (entity is Course)
+            //    {
+            //        _context.Database.ExecuteSqlAsync("");
+            //        await _context.SaveChangesAsync();
+            //    }
+            //    }
+
             return entity;
         }
 
@@ -68,13 +82,24 @@ namespace Infrastructure.Data.Repositories
                 return _context.Set<TEntity>().FirstOrDefault(filter);
             }
             return _context.Set<TEntity>().FirstOrDefault();
-
-
+        }
+        public IQueryable<TEntity> OrderBy(Expression<Func<TEntity, bool>> filter = null)
+        {
+                return _context.Set<TEntity>().OrderBy(filter);
+        }
+        public TEntity LastOrDefault()
+        {
+            return _context.Set<TEntity>().LastOrDefault();
         }
 
         public IQueryable<TEntity> Include(string entityName)
         {
             return _context.Set<TEntity>().Include(entityName);
+        }
+
+        public IQueryable<TEntity> AsNoTracking()
+        {
+            return _context.Set<TEntity>().AsNoTracking();
         }
     }
 }

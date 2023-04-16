@@ -35,7 +35,6 @@ namespace Infrastructure.Services
             var teachRequest = new TeacherRequest
             {
                 Lesson = _lessonReadRepository.GetByIdAsync(teacherRequest.LessonId).Result,
-                Teacher = _teacherReadRepository.GetByIdAsync(teacherRequest.TeacherId).Result,
                 Student = _studentReadRepository.GetByIdAsync(teacherRequest.StudentUserId).Result,
                  Type= teacherRequest.TeachingType,
                 Status = Core.Enums.OrderStatus.Pending

@@ -7,13 +7,15 @@ namespace Core.Entities
 {
     public class Student: BaseEntity, IAggregateRoot
     {
+        public Student()
+        {
+
+        }
         public Student(string userName)
         {
             UserName = userName;
         }
         public string UserName { get; set; }
-        [InverseProperty(nameof(Student))]
-        public ICollection<TeacherRequest> TeacherRequests { get; set; }
         public ICollection<Course> Courses { get; set; }
     }
 }

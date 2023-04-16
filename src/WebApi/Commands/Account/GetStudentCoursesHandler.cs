@@ -29,7 +29,7 @@ namespace WebApi.Commands.Account
                       CreatedTime = s.CreatedTime,
                       Duration = (int)(s.Duration / 360)==0? $"{(int)(s.Duration / 60)} دقیقه" : $"{(int)(s.Duration /360)} ساعت و {(int)((s.Duration % 360) /60)} دقیقه",
                       Id = s.Id,
-                      Level = (int)s.Level,
+                      Level = s.Level.ToString(),
                       Price = s.Price,
                       Thumbnail=s.Thumbnail,
                       Teacher=s.Teacher.FullNameFa

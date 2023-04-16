@@ -1,22 +1,26 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Commands.Courses
 {
     public class UpdateCourseHandler : IRequestHandler<UpdateCourse, Course>
     {
         private readonly IRepository<Course> _courseRepository;
+        private readonly IRepository<Session> _sessionRepository;
         private readonly IReadRepository<CourseCategory> _categoryReadRepo;
         private readonly IReadRepository<Teacher> _teacherReadRepo;
 
         public UpdateCourseHandler(IRepository<Course> courseRepository,
+            IRepository<Session> sessionRepository,
             IReadRepository<CourseCategory> categoryReadRepo,
              IReadRepository<Teacher> teacherReadRepo)
         {
             _courseRepository = courseRepository;
             _categoryReadRepo = categoryReadRepo;
             _teacherReadRepo = teacherReadRepo;
+            _sessionRepository = sessionRepository;
         }
 
         public async Task<Course> Handle(UpdateCourse request, CancellationToken cancellationToken)
@@ -24,7 +28,11 @@ namespace WebApi.Commands.Courses
             var category = _categoryReadRepo.GetByIdAsync(request.Course.CategoryId).Result;
             var teacher = _teacherReadRepo.GetByIdAsync(request.Course.TeacherId).Result;
 
-            var course = _courseRepository.Where(p => p.Id == request.Course.Id).FirstOrDefault();
+            var course = _courseRepository
+               .Where(p => p.Id == request.Course.Id)
+               .FirstOrDefault();
+
+            
 
             string thumbnail = string.Empty;
             if (request.Course.ThumbnailBase46 != null)
@@ -43,6 +51,7 @@ namespace WebApi.Commands.Courses
             course.Category = category;
             course.Description = request.Course.Description;
             course.Duration = request.Course.Duration;
+            course.Level = request.Course.Level;
             course.Price = request.Course.Price;
             course.Thumbnail = thumbnail;
             course.TitleEn = request.Course.TitleEn;

@@ -20,11 +20,10 @@ namespace WebApi.Commands.TeachingRequest
             var teachingRequests = await _teachingRequestRepository.ListAsync(specification, cancellationToken);
             return teachingRequests.Select(r => new TeachingRequestViewModel
             {
-                TeacherId = r.Teacher.Id,
-                TeacherName = r.Teacher.FullNameFa,
+                StudentUserId = r.Student.UserName,
+                Description = r.Description,
+                Place = r.Place,
                 Type = r.Type,
-                Lesson = r.Lesson,
-                Student = r.Student,
                 Status = r.Status
             });
         }
