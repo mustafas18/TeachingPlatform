@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Commands.Courses;
 using WebApi.Commands.Teachers;
+using WebApi.ViewModels;
 
 namespace WebApi.Controllers
 {
@@ -26,7 +27,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
 
         }

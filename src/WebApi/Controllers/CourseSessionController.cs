@@ -28,7 +28,12 @@ namespace WebApi.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
         }
 #if DEBUG
@@ -45,7 +50,12 @@ namespace WebApi.Controllers
             }
             catch(Exception ex)
             {
-               return StatusCode(500,ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
         }
         [Authorize(Roles = "admin,teacher")]
@@ -65,7 +75,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
            
         }

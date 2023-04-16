@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.Commands.Account;
 using WebApi.Commands.Courses;
+using WebApi.ViewModels;
 using WebApi.ViewModels.Acconut;
 
 namespace WebApi.Controllers
@@ -28,7 +29,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
 
         }
@@ -43,7 +49,12 @@ namespace WebApi.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
 
         }
@@ -58,7 +69,12 @@ namespace WebApi.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
         }
         /// <summary>
@@ -77,7 +93,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
 
         }

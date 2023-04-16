@@ -10,12 +10,12 @@ using Core.Dtos;
 namespace WebApi.Controllers
 {
     [Route("api/[controller]/[action]")]
-    public class TeacherRequestController: BaseApiController
+    public class TeacherRequestController : BaseApiController
     {
         private readonly IMediator _mediator;
         private readonly ITeacherRequestService _teachRequestService;
 
-        public TeacherRequestController(IMediator mediator, ITeacherRequestService teachRequestService )
+        public TeacherRequestController(IMediator mediator, ITeacherRequestService teachRequestService)
         {
             _mediator = mediator;
             _teachRequestService = teachRequestService;
@@ -30,39 +30,30 @@ namespace WebApi.Controllers
 
                 return Ok(result);
             }
-            catch(Exception ex)
-            {
-               return StatusCode(500, ex.Message);
-            }
-            
-        }
-        [HttpGet]
-        public async Task<IActionResult> GetByTeacherId(int teacherId)
-        {
-            try
-            {
-                var result = await _mediator.Send(new GetTeachingRequests(teacherId));
-                return Ok(result);
-            }
-            catch(Exception ex)
-            {
-               return StatusCode(500,ex.Message);
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TeacherRequestDto teacherRequest)
-        {
-            try
-            {
-                //Todo: It's good idea to use a command
-                //var result = await _mediator.Send(new AddTeacherRequest(teacherRequest));
-                var result = _teachRequestService.AddTeacherRequest(teacherRequest);
-                return Ok(result);
-            }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
+            }
+
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] TeachingRequestViewModel teacherRequest)
+        {
+            try
+            {
+                var result = await _mediator.Send(new CreateTeachingRequest(teacherRequest));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
         }
 

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Net;
 using System.Security.Claims;
 using WebApi.Commands.Account;
+using WebApi.ViewModels;
 using WebApi.ViewModels.Acconut;
 
 namespace WebApi.Controllers
@@ -87,7 +88,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
         }
         [AllowAnonymous]
@@ -111,7 +117,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
 
         }

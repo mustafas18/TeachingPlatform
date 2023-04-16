@@ -29,7 +29,33 @@ namespace WebApi.Controllers
             }
             catch(Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
+            }
+
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> GetAllWithoutCaching()
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetAllCourses());
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
 
         }
@@ -45,7 +71,12 @@ namespace WebApi.Controllers
             }
             catch(Exception ex)
             {
-               return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
 
         }
@@ -78,7 +109,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
 
         }
@@ -93,7 +129,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException.ToString(),
+                    StackTrace = null
+                });
             }
         }
         [Authorize(Roles = "admin,teacher")]
