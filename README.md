@@ -23,7 +23,7 @@ To improve consistency and scalability, the repositories are segregated into *Re
 
 *ReadRepository* is used for reading operations, while *Repository* is for creating, updating, and deleting operations on database.
 
-Most developers use *CachedRepository*, which usually override t Most developers use *CachedRepository*, which overrides the methods of the base repository. As a result, the life time of CachedRepository is the same as base repository.
+Most developers use *CachedRepository*, which usually overrides the methods of the base repository. As a result, the life time of CachedRepository is the same as base repository.
 
 The *ReadRepository* uses IMemoryCache, therefore, it can be regarded as an independent *CachedRepository*. However, it has different lifetime.
 
