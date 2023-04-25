@@ -19,13 +19,14 @@ Here is  the diagram:
 
 ![DDD](https://github.com//mustafas18/TeachingPlatform/blob/master/DesignDiagram.png?raw=true)
 
-To improve consistency and scalability, the repositories are segregated into *ReadRepository* and *Repository*. This segregation reduces merge conflicts while performing multiple operations with data. *ReadRepository* is used for reading operations, while *Repository* is for creating, updating, and deleting operations on database.
+To improve consistency and scalability, the repositories are segregated into *ReadRepository* and *Repository*. This segregation reduces merge conflicts while performing multiple operations with data. 
 
-*Repository* and *ReadRepository* lifetime:
-```
-  services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-  services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
-```
+*ReadRepository* is used for reading operations, while *Repository* is for creating, updating, and deleting operations on database.
+
+Most developers use *CachedRepository*, which usually override t Most developers use *CachedRepository*, which overrides the methods of the base repository. As a result, the life time of CachedRepository is the same as base repository.
+
+The *ReadRepository* uses IMemoryCache, therefore, it can be regarded as an independent *CachedRepository*. However, it has different lifetime.
+
 
 I encourage programmers to contribute.
 
