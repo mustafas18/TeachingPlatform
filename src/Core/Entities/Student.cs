@@ -11,11 +11,15 @@ namespace Core.Entities
         {
 
         }
-        public Student(string userName)
+        public Student(string userName,string mobile, string fullNameFa)
         {
             UserName = userName;
+            Mobile = mobile;
+            FullNameFa = fullNameFa;
         }
         public string UserName { get; set; }
+        public string FullNameFa { get; set; }
+        public string Mobile { get; set; }
         public ICollection<Course> Courses { get; set; }
     }
 }

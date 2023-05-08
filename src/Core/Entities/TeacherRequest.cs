@@ -31,7 +31,7 @@ namespace Core.Entities
         public string? Description { get; set; }
         public int Price { get; set; }
         public string RequestGuid { get; set; }
-        public DateTime RequestTime = DateTime.Now;
-        public OrderStatus Status { get; set; }
+        public DateTime RequestTime { get; set; }
+    public OrderStatus Status { get; set; }
     }
 }

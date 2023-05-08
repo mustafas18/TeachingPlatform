@@ -6,6 +6,7 @@ using Infrastructure.Services;
 using Core.Interfaces;
 using Core.Entities;
 using Core.Dtos;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -13,14 +14,12 @@ namespace WebApi.Controllers
     public class TeacherRequestController : BaseApiController
     {
         private readonly IMediator _mediator;
-        private readonly ITeacherRequestService _teachRequestService;
 
-        public TeacherRequestController(IMediator mediator, ITeacherRequestService teachRequestService)
+        public TeacherRequestController(IMediator mediator)
         {
             _mediator = mediator;
-            _teachRequestService = teachRequestService;
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -39,7 +38,7 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TeachingRequestViewModel teacherRequest)
+        public async Task<IActionResult> Create([FromBody] CreateTeachingRequestViewModel teacherRequest)
         {
             try
             {
@@ -51,7 +50,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }

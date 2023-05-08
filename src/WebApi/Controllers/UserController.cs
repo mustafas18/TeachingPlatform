@@ -43,7 +43,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException?.ToString(),
+                    StackTrace = null
+                });
             }
 
         }
@@ -58,7 +63,12 @@ namespace WebApi.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException?.ToString(),
+                    StackTrace = null
+                });
             }
         }
 
@@ -74,7 +84,12 @@ namespace WebApi.Controllers
 
             catch (Exception ex)
             {
-                return StatusCode(500, ex.Message);
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException?.ToString(),
+                    StackTrace = null
+                });
             }
         }
         [AllowAnonymous]
@@ -91,7 +106,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }
@@ -120,7 +135,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }

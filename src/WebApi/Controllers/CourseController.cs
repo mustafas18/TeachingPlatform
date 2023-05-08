@@ -1,7 +1,9 @@
 ﻿using Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using WebApi.Commands.Courses;
 using WebApi.Commands.TeachingRequest;
 using WebApi.ViewModels;
@@ -12,12 +14,16 @@ namespace WebApi.Controllers
     public class CourseController : BaseApiController
     {
         private readonly IMediator _mediator;
-        public CourseController(IMediator mediator)
+        private readonly IWebHostEnvironment _env;
+
+        public CourseController(IMediator mediator,
+            IWebHostEnvironment env)
         {
             _mediator = mediator;
+            _env = env;
         }
         [AllowAnonymous]
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [ResponseCache(Duration = 180, Location = ResponseCacheLocation.Any)]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -27,12 +33,12 @@ namespace WebApi.Controllers
 
                 return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }
@@ -53,7 +59,29 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
+                    StackTrace = null
+                });
+            }
+
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        [ResponseCache(Duration = 180, Location = ResponseCacheLocation.Any)]
+        public async Task<IActionResult> GetByIdCached(int courseId)
+        {
+            try
+            {
+                var course = await _mediator.Send(new GetCourse(courseId));
+                //course?.Sessions.ForEach(p => { p.Course = null; });
+                return Ok(course);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }
@@ -69,12 +97,12 @@ namespace WebApi.Controllers
                 //course?.Sessions.ForEach(p => { p.Course = null; });
                 return Ok(course);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }
@@ -82,6 +110,7 @@ namespace WebApi.Controllers
         }
         [AllowAnonymous]
         [HttpGet]
+        [ResponseCache(Duration = 180, Location = ResponseCacheLocation.Any)]
         public async Task<IActionResult> GetSessionsByCourseId(int courseId)
         {
             try
@@ -100,7 +129,7 @@ namespace WebApi.Controllers
 #endif
         [Authorize(Roles = "admin,teacher")]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CourseCreateViewModel course)
+        public async Task<IActionResult> Create([FromForm] CourseCreateViewModel course)
         {
             try
             {
@@ -112,12 +141,43 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }
 
         }
+        [Authorize(Roles = "admin,teacher")]
+        [HttpPost]
+        public async Task<IActionResult> UploadThumbnail([FromForm] IFormFile formFile)
+        {
+            try
+            {
+                var directory = Path.Combine(_env.ContentRootPath, "wwwroot",
+                    "images", "courses");
+                if (!Directory.Exists(directory))
+                    Directory.CreateDirectory(directory);
+
+                var path = Path.Combine(directory, formFile.FileName);
+
+                await using FileStream fileStream = new(path, FileMode.Create);
+                await formFile.CopyToAsync(fileStream);
+                var uri = new Uri($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}/images/courses/{formFile.FileName}");
+
+                return Ok(uri.AbsoluteUri);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ErrorViewModel
+                {
+                    Message = ex.Message,
+                    InnerMessage = ex.InnerException?.ToString(),
+                    StackTrace = null
+                });
+            }
+
+        }
+
         [Authorize(Roles = "admin,teacher")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] CourseCreateViewModel course)
@@ -132,7 +192,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }

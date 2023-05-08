@@ -20,6 +20,11 @@ namespace Core.Interfaces
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null);
         TEntity LastOrDefault();
         IQueryable<TEntity> OrderBy(Expression<Func<TEntity, bool>> filter = null);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entityName">includeProperties as string seperated by ,</param>
+        /// <returns></returns>
         IQueryable<TEntity> Include(string entityName);
         IQueryable<TEntity> AsNoTracking();
     }

@@ -28,11 +28,13 @@ namespace WebApi.Commands.Account
 
                 AppUser newUser = new AppUser();
                 newUser.UserName = request.Register.UserName;
+                newUser.Mobile = request.Register.Mobile;
+                newUser.FullNameFa = request.Register.FullName;
 
                 await _userManager.CreateAsync(newUser, request.Register.Password);
                 await _userManager.AddToRoleAsync(newUser, "student");
 
-                await _repository.AddAsync(new Student(newUser.UserName));
+                await _repository.AddAsync(new Student(newUser.UserName,newUser.Mobile, newUser.FullNameFa));
 
                 return newUser;
             }

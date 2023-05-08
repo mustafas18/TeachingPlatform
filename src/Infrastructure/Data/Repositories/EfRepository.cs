@@ -4,6 +4,7 @@ using Azure.Core;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,13 @@ namespace Infrastructure.Data.Repositories
     public class EfRepository<TEntity> : RepositoryBase<TEntity>, IReadRepository<TEntity> where TEntity : class, IAggregateRoot
     {
         private readonly AppDbContext _context;
+        private readonly IMemoryCache _memoryCache;
 
-        public EfRepository(AppDbContext dbContext) : base(dbContext)
+        public EfRepository(AppDbContext dbContext,
+            IMemoryCache memoryCache) : base(dbContext)
         {
             _context = dbContext;
+            _memoryCache = memoryCache;
         }
 
         public void Add(TEntity entity)
@@ -60,29 +64,45 @@ namespace Infrastructure.Data.Repositories
         }
         public List<TEntity> GetAll()
         {
-            return _context.Set<TEntity>().ToList();
+            return _memoryCache.GetOrCreate($"GetAll{nameof(TEntity)}", entity =>
+            {
+                entity.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1);
+                return _context.Set<TEntity>().ToList();
+            });    
         }
         public async  Task<List<TEntity>> GetAllAsync()
         {
-            return await _context.Set<TEntity>().ToListAsync();
+            return await _memoryCache.GetOrCreate($"GetAllAsync{nameof(TEntity)}", entity =>
+            {
+                entity.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1);
+                return _context.Set<TEntity>().ToListAsync();
+            });
         }
-        public IQueryable<TEntity> Include(string entityName)
+        public IQueryable<TEntity> Include(string entityProperties)
         {
-            return _context.Set<TEntity>().Include(entityName);
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+            foreach (var includeProperty in entityProperties.Split(",", StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            return query;
         }
 
 
-        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
+        public IQueryable<TEntity> Where(string cacheKey,Expression<Func<TEntity, bool>> filter = null,
                             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                             string includeProperties = "",
                             int first = 0, int offset = 0)
         {
-            if (filter != null)
+            return _memoryCache.GetOrCreate(cacheKey, entity =>
             {
-                return _context.Set<TEntity>().Where(filter);
-            }
-            return null;
-
+                entity.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1);
+                if (filter != null)
+                {
+                    return _context.Set<TEntity>().Where(filter);
+                }
+                return null;
+            });
 
         }
 

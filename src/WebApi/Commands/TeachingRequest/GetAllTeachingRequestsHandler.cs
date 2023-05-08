@@ -16,13 +16,16 @@ namespace WebApi.Commands.TeachingRequest
         }
         public async Task<IEnumerable<TeachingRequestViewModel>> Handle(GetAllTeachingRequests request, CancellationToken cancellationToken)
         {
-            var specification = new TeachRequestsSpecification();
-            var teachingRequests = await _teachingRequestRepository.ListAsync(specification, cancellationToken);
+            var teachingRequests = _teachingRequestRepository.Include("Student,Lesson,Teacher").ToList();
             return teachingRequests.Select(r => new TeachingRequestViewModel
             {
-                StudentUserId = r.Student.UserName,
+                Student = r.Student,
                 Description = r.Description,
                 Place = r.Place,
+                Price = r.Price,
+                LessonEnName = r.Lesson?.NameEn,
+                TeacherName = r.Teacher?.FullNameEn,
+                RequestDateTime = r.RequestTime,
                 Type = r.Type,
                 Status = r.Status
             });

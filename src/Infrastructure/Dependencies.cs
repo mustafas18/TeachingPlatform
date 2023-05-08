@@ -19,7 +19,8 @@ namespace Infrastructure
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
-            services.AddScoped<ITeacherRequestService, TeacherRequestService>();
+            services.AddScoped<IEmailService, EmailService>();
+
 
         }
     }

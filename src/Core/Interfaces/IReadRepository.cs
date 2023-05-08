@@ -19,7 +19,7 @@ namespace Core.Interfaces
                                    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                                    string includeProperties = "");
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter = null);
-        IQueryable<T> Where(Expression<Func<T, bool>> filter = null,
+        IQueryable<T> Where(string cacheKey,Expression<Func<T, bool>> filter = null,
     Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
     string includeProperties = "",
     int first = 0, int offset = 0);

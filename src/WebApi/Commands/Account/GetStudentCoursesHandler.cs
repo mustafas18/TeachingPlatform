@@ -21,7 +21,7 @@ namespace WebApi.Commands.Account
         {
             var student = await _studentRepository.FirstOrDefaultAsync(s => s.UserName == request.UserName);
             var courses = await _courseRepository
-                  .Where(p => p.Students.Contains(student))
+                  .Where($"GetStudentCourses{request.UserName}",p => p.Students.Contains(student))
                   .Include("Students").Select(s => new CourseViewModel
                   {
                       TitleFa = s.TitleFa,

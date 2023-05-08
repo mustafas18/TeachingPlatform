@@ -32,7 +32,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }
@@ -52,7 +52,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }
@@ -72,7 +72,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }
@@ -96,7 +96,7 @@ namespace WebApi.Controllers
                 return StatusCode(500, new ErrorViewModel
                 {
                     Message = ex.Message,
-                    InnerMessage = ex.InnerException.ToString(),
+                    InnerMessage = ex.InnerException?.ToString(),
                     StackTrace = null
                 });
             }

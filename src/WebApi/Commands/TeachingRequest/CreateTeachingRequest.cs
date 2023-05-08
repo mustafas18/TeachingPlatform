@@ -6,11 +6,11 @@ namespace WebApi.Commands.TeachingRequest
 {
     public class CreateTeachingRequest : IRequest<TeacherRequest>
     {
-        public CreateTeachingRequest(TeachingRequestViewModel requestViewModel)
+        public CreateTeachingRequest(CreateTeachingRequestViewModel requestViewModel)
         {
             RequestViewModel = requestViewModel;
         }
 
-        public TeachingRequestViewModel RequestViewModel { get; }
+        public CreateTeachingRequestViewModel RequestViewModel { get; }
     }
 }

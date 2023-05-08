@@ -4,6 +4,7 @@ namespace WebApi.ViewModels.Acconut
 {
     public class RegisterViewModel
     {
+        public string FullName { get; set; }
         [Required]
         [Display(Name = "UserName")]
         public string UserName { get; set; }

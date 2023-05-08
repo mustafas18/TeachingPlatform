@@ -37,4 +37,16 @@
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="wwwroot\images\courses\00271d64-346a-48c8-a2c8-1450793b0e1c_.webp" />
+    <None Include="wwwroot\images\courses\5172b58d-443a-41b4-b0fd-8c9bdf450ca5_.webp" />
+    <None Include="wwwroot\images\courses\8af5e5dc-4383-4b3c-a4d7-e2b5e4599964_.webp" />
+    <None Include="wwwroot\images\courses\94295858-6b6a-4176-9997-37f5f5160f46_.webp" />
+    <None Include="wwwroot\images\courses\9a2eb677-ae1f-4c8b-a248-d5ef6474e600_ - Shortcut.lnk" />
+    <None Include="wwwroot\images\courses\9a2eb677-ae1f-4c8b-a248-d5ef6474e600_.webp" />
+    <None Include="wwwroot\images\courses\ielts-tips - Shortcut.lnk" />
+    <None Include="wwwroot\images\courses\ielts-tips.jpg" />
+  </ItemGroup>
 </Project>

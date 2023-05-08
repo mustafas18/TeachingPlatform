@@ -1,6 +1,7 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Caching.Memory;
 using WebApi.ViewModels;
 
 namespace WebApi.Commands.Courses
@@ -10,14 +11,17 @@ namespace WebApi.Commands.Courses
         private readonly IRepository<Course> _courseRepository;
         private readonly IReadRepository<CourseCategory> _categoryReadRepo;
         private readonly IReadRepository<Teacher> _teacherReadRepo;
+        private readonly IMemoryCache _memoryCache;
 
         public CreateCourseHandler(IRepository<Course> courseRepository,
             IReadRepository<CourseCategory> categoryReadRepo,
-             IReadRepository<Teacher> teacherReadRepo)
+             IReadRepository<Teacher> teacherReadRepo,
+             IMemoryCache memoryCache)
         {
             _courseRepository = courseRepository;
             _categoryReadRepo = categoryReadRepo;
             _teacherReadRepo = teacherReadRepo;
+            _memoryCache = memoryCache;
         }
         public async Task<Course> Handle(CreateCourse request, CancellationToken cancellationToken)
         {
@@ -25,7 +29,7 @@ namespace WebApi.Commands.Courses
             var teacher = _teacherReadRepo.GetByIdAsync(request.CourseCreate.TeacherId).Result;
 
             // Save thumbnails as file
-            //var fileExtension = System.IO.Path.GetExtension(request.CourseCreate.Thumbnail.FileName)?.ToLower().Replace(".","");
+            //var fileExtension = System.IO.Path.GetExtension(request.CourseCreate.FormFile.FileName)?.ToLower().Replace(".","");
             //var fileName = $"Course_{Guid.NewGuid()}{fileExtension}";
             //string filePath = Path.Combine(Directory.GetCurrentDirectory(), "uploads", fileName);
 
@@ -33,7 +37,7 @@ namespace WebApi.Commands.Courses
             //    Directory.CreateDirectory(filePath);
             //filePath += fileExtension;
             //using var stream = new FileStream(filePath, FileMode.CreateNew);
-            //request.CourseCreate.Thumbnail.CopyToAsync(stream, cancellationToken);
+            //request.CourseCreate.FormFile.CopyToAsync(stream, cancellationToken);
             //var thumbnail = fileName;
 
             //Save thumbnails as base64
@@ -54,6 +58,7 @@ namespace WebApi.Commands.Courses
                // Sessions=request.CourseCreate.Sessions
             };
             _courseRepository.AddAsync(course);
+            _memoryCache.Remove("GetCourseList");
             return course;
         }
     }

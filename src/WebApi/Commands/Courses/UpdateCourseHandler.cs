@@ -2,6 +2,7 @@
 using Core.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace WebApi.Commands.Courses
 {
@@ -11,15 +12,18 @@ namespace WebApi.Commands.Courses
         private readonly IRepository<Session> _sessionRepository;
         private readonly IReadRepository<CourseCategory> _categoryReadRepo;
         private readonly IReadRepository<Teacher> _teacherReadRepo;
+        private readonly IMemoryCache _memoryCache;
 
         public UpdateCourseHandler(IRepository<Course> courseRepository,
             IRepository<Session> sessionRepository,
             IReadRepository<CourseCategory> categoryReadRepo,
-             IReadRepository<Teacher> teacherReadRepo)
+             IReadRepository<Teacher> teacherReadRepo,
+              IMemoryCache memoryCache)
         {
             _courseRepository = courseRepository;
             _categoryReadRepo = categoryReadRepo;
             _teacherReadRepo = teacherReadRepo;
+            _memoryCache = memoryCache;
             _sessionRepository = sessionRepository;
         }
 
@@ -60,7 +64,7 @@ namespace WebApi.Commands.Courses
             course.Sessions = request.Course.Sessions;
 
             await _courseRepository.UpdateAsync(course);
-
+            _memoryCache.Remove("GetCourseList");
             return course;
         }
     }

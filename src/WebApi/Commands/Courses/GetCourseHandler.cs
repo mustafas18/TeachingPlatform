@@ -4,6 +4,7 @@ using Core.Interfaces;
 using Core.Specifications;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using WebApi.ViewModels;
 
 namespace WebApi.Commands.Courses
@@ -11,17 +12,24 @@ namespace WebApi.Commands.Courses
     public class GetCourseHandler : IRequestHandler<GetCourse, Course>
     {
         private readonly IReadRepository<Course> _courseRepository;
+        private readonly IMemoryCache _memoryCache;
 
-        public GetCourseHandler(IReadRepository<Course> courseRepository)
+        public GetCourseHandler(IReadRepository<Course> courseRepository,
+            IMemoryCache memoryCache)
         {
             _courseRepository = courseRepository;
+            _memoryCache = memoryCache;
         }
         public async Task<Course> Handle(GetCourse request, CancellationToken cancellationToken)
         {
-            var course = await _courseRepository
-                .Include("Sessions")
-                .Include("Teacher")
-                .FirstOrDefaultAsync(p=>p.Id== request.CourseId);
+            var course =await _courseRepository
+                       .Include("Sessions,Teacher")
+                       .FirstOrDefaultAsync(p => p.Id == request.CourseId);
+            if (course.Sessions != null)
+            {
+                course.Sessions = course.Sessions.OrderBy(s => s.OrderNumber).ToList();
+            }
+ 
             return course;
         }
     }

@@ -2,12 +2,14 @@
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Data.Repositories
 {
@@ -92,9 +94,14 @@ namespace Infrastructure.Data.Repositories
             return _context.Set<TEntity>().LastOrDefault();
         }
 
-        public IQueryable<TEntity> Include(string entityName)
+        public IQueryable<TEntity> Include([NotParameterized] string entityProperties)
         {
-            return _context.Set<TEntity>().Include(entityName);
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+            foreach (var includeProperty in entityProperties.Split(",", StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+            return query;
         }
 
         public IQueryable<TEntity> AsNoTracking()

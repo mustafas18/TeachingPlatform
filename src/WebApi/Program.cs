@@ -11,6 +11,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Infrastructure.Identity;
 using Core;
+using Microsoft.Extensions.FileProviders;
+using Org.BouncyCastle.Ocsp;
 
 namespace WebApi
 {
@@ -59,6 +61,7 @@ namespace WebApi
 
             builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddSwaggerGen(c =>
             {
@@ -94,10 +97,13 @@ namespace WebApi
                     }
                 });
             });
-
+#if DEBUG
             builder.Services.AddDbContext<AppDbContext>(options =>
              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
-
+#else
+            builder.Services.AddDbContext<AppDbContext>(options =>
+             options.UseSqlServer(Configuration.GetConnectionString("ReleaseConnectionString")));
+#endif
 
 
             builder.Services.AddAuthentication(opt =>
@@ -120,7 +126,6 @@ namespace WebApi
             builder.Services.AddResponseCaching();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddControllers();
-          
 
 
             var app = builder.Build();
@@ -139,15 +144,16 @@ namespace WebApi
                     await AppDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
             }
 
-            if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
-            {
+            //if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
+            //{
                 app.UseSwagger();
                 app.UseSwaggerUI();
-            }
+            //}
 
-            app.UseStaticFiles();
-
+            // Enable displaying browser links.
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
