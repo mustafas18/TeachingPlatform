@@ -25,7 +25,6 @@ namespace WebApi.Commands.TeachingRequest
                 TeacherId = r.Teacher.Id,
                 TeacherName = r.Teacher.FullNameFa,
                 Type = r.Type,
-                Lesson = r.Lesson,
                 Student = r.Student,
                 Status = r.Status
             });
