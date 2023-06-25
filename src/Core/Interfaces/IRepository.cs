@@ -13,19 +13,19 @@ namespace Core.Interfaces
         Task AddAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
-        IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
+        IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "",
             int first = 0, int offset = 0);
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> filter = null);
         TEntity LastOrDefault();
-        IQueryable<TEntity> OrderBy(Expression<Func<TEntity, bool>> filter = null);
+        IEnumerable<TEntity> OrderBy(Expression<Func<TEntity, bool>> filter = null);
         /// <summary>
         /// 
         /// </summary>
         /// <param name="entityName">includeProperties as string seperated by ,</param>
         /// <returns></returns>
-        IQueryable<TEntity> Include(string entityName);
-        IQueryable<TEntity> AsNoTracking();
+        IEnumerable<TEntity> Include(string entityName);
+        IEnumerable<TEntity> AsNoTracking();
     }
 }

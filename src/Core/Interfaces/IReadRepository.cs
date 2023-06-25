@@ -12,15 +12,15 @@ namespace Core.Interfaces
 {
     public interface IReadRepository<T> : IReadRepositoryBase<T> where T : class, IAggregateRoot
     {
-        List<T> GetAll();
-        Task<List<T>> GetAllAsync();
-        IQueryable<T> Include(string entityName);
+        IEnumerable<T> GetAll();
+        Task<IEnumerable<T>> GetAllAsync();
+        IEnumerable<T> Include(string entityName);
         T FirstOrDefault(Expression<Func<T, bool>> filter = null,
                                    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
                                    string includeProperties = "");
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> filter = null);
-        IQueryable<T> Where(string cacheKey,Expression<Func<T, bool>> filter = null,
-    Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        IEnumerable<T> Where(string cacheKey,Expression<Func<T, bool>> filter = null,
+    Func<IEnumerable<T>, IOrderedQueryable<T>> orderBy = null,
     string includeProperties = "",
     int first = 0, int offset = 0);
     }

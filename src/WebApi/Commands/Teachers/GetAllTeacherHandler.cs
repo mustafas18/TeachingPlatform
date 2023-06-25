@@ -17,7 +17,7 @@ namespace WebApi.Commands.Teachers
 
         public async Task<List<Teacher>> Handle(GetAllTeacher request, CancellationToken cancellationToken)
         {
-            return await _readRepository.GetAllAsync();
+            return await Task.Run(()=> _readRepository.GetAllAsync().Result.ToList());
         }
     }
 }

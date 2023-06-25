@@ -9,17 +9,17 @@ namespace WebApi.Commands.Courses
 {
     public class GetSessionsHandler : IRequestHandler<GetSessions, List<Session>>
     {
-        private readonly IReadRepository<Course> _readRepository;
+        private readonly ICourseRepository _courseRepository;
 
-        public GetSessionsHandler(IReadRepository<Course> readRepository)
+        public GetSessionsHandler(ICourseRepository courseRepository)
         {
-            _readRepository = readRepository;
+            _courseRepository = courseRepository;
         }
         public async Task<List<Session>> Handle(GetSessions request, CancellationToken cancellationToken)
         {
-            var course = await _readRepository
-                .Include("Sessions")
-                .FirstOrDefaultAsync(s => s.Id == request.CourseId);
+            var course = await  Task.Run(()=>_courseRepository
+                .CourseWithSessions()
+                .FirstOrDefault(s => s.Id == request.CourseId));
                                
             return course.Sessions;
         }

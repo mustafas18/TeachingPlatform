@@ -20,9 +20,9 @@ namespace WebApi.Commands.Account
         public async Task<List<CourseViewModel>> Handle(GetStudentCourses request, CancellationToken cancellationToken)
         {
             var student = await _studentRepository.FirstOrDefaultAsync(s => s.UserName == request.UserName);
-            var courses = await _courseRepository
+            var courses = await Task.Run(()=> _courseRepository
                   .Where($"GetStudentCourses{request.UserName}",p => p.Students.Contains(student))
-                  .Include("Students").Select(s => new CourseViewModel
+                   .Select(s => new CourseViewModel
                   {
                       TitleFa = s.TitleFa,
                       TitleEn = s.TitleEn,
@@ -33,7 +33,7 @@ namespace WebApi.Commands.Account
                       Price = s.Price,
                       Thumbnail=s.Thumbnail,
                       Teacher=s.Teacher.FullNameFa
-                  }).ToListAsync();
+                  }).ToList());
 
 
             return courses;

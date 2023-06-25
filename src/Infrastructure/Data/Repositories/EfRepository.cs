@@ -62,13 +62,17 @@ namespace Infrastructure.Data.Repositories
 
 
         }
-        public List<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             return _memoryCache.GetOrCreate($"GetAll{nameof(TEntity)}", entity =>
             {
                 entity.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1);
                 return _context.Set<TEntity>().ToList();
             });    
+        }
+        async Task<IEnumerable<TEntity>> IReadRepository<TEntity>.GetAllAsync()
+        {
+                return await _context.Set<TEntity>().ToListAsync();
         }
         public async  Task<List<TEntity>> GetAllAsync()
         {
@@ -78,7 +82,7 @@ namespace Infrastructure.Data.Repositories
                 return _context.Set<TEntity>().ToListAsync();
             });
         }
-        public IQueryable<TEntity> Include(string entityProperties)
+        public IEnumerable<TEntity> Include(string entityProperties)
         {
             IQueryable<TEntity> query = _context.Set<TEntity>();
             foreach (var includeProperty in entityProperties.Split(",", StringSplitOptions.RemoveEmptyEntries))
@@ -89,8 +93,8 @@ namespace Infrastructure.Data.Repositories
         }
 
 
-        public IQueryable<TEntity> Where(string cacheKey,Expression<Func<TEntity, bool>> filter = null,
-                            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        public IEnumerable<TEntity> Where(string cacheKey,Expression<Func<TEntity, bool>> filter = null,
+                            Func<IEnumerable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                             string includeProperties = "",
                             int first = 0, int offset = 0)
         {
@@ -106,5 +110,6 @@ namespace Infrastructure.Data.Repositories
 
         }
 
+       
     }
 }

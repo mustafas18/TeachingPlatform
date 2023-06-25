@@ -22,9 +22,9 @@ namespace WebApi.Commands.Courses
         }
         public async Task<Course> Handle(GetCourse request, CancellationToken cancellationToken)
         {
-            var course =await _courseRepository
+            var course =await Task.Run(()=> _courseRepository
                        .Include("Sessions,Teacher")
-                       .FirstOrDefaultAsync(p => p.Id == request.CourseId);
+                       .FirstOrDefault(p => p.Id == request.CourseId));
             if (course.Sessions != null)
             {
                 course.Sessions = course.Sessions.OrderBy(s => s.OrderNumber).ToList();

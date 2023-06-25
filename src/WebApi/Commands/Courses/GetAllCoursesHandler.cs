@@ -12,10 +12,10 @@ namespace WebApi.Commands.Courses
 {
     public class GetAllCoursesHandler : IRequestHandler<GetAllCourses, IEnumerable<CourseViewModel>>
     {
-        private readonly IReadRepository<Course> _courseRepository;
+        private readonly ICourseRepository _courseRepository;
         private readonly IMemoryCache _memoryCache;
 
-        public GetAllCoursesHandler(IReadRepository<Course> courseRepository,
+        public GetAllCoursesHandler(ICourseRepository courseRepository,
               IMemoryCache memoryCache)
         {
             _courseRepository = courseRepository;
@@ -25,7 +25,7 @@ namespace WebApi.Commands.Courses
         {
             return await _memoryCache.GetOrCreate("GetCourseList", async entity =>
             {
-                var courses =await  _courseRepository.Include("Teacher").ToListAsync();
+                var courses = await Task.Run(() => _courseRepository.CourseWithTeachers().ToList());
                 return courses.Select(c => new CourseViewModel
                 {
                     Id = c.Id,

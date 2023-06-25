@@ -64,7 +64,7 @@ namespace Infrastructure.Data.Repositories
             return entity;
         }
 
-        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
+        public IEnumerable<TEntity> Where(Expression<Func<TEntity, bool>> filter = null,
                             Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
                             string includeProperties = "",
                             int first = 0, int offset = 0)
@@ -85,7 +85,7 @@ namespace Infrastructure.Data.Repositories
             }
             return _context.Set<TEntity>().FirstOrDefault();
         }
-        public IQueryable<TEntity> OrderBy(Expression<Func<TEntity, bool>> filter = null)
+        public IEnumerable<TEntity> OrderBy(Expression<Func<TEntity, bool>> filter = null)
         {
                 return _context.Set<TEntity>().OrderBy(filter);
         }
@@ -94,7 +94,7 @@ namespace Infrastructure.Data.Repositories
             return _context.Set<TEntity>().LastOrDefault();
         }
 
-        public IQueryable<TEntity> Include([NotParameterized] string entityProperties)
+        public IEnumerable<TEntity> Include([NotParameterized] string entityProperties)
         {
             IQueryable<TEntity> query = _context.Set<TEntity>();
             foreach (var includeProperty in entityProperties.Split(",", StringSplitOptions.RemoveEmptyEntries))
@@ -104,7 +104,7 @@ namespace Infrastructure.Data.Repositories
             return query;
         }
 
-        public IQueryable<TEntity> AsNoTracking()
+        public IEnumerable<TEntity> AsNoTracking()
         {
             return _context.Set<TEntity>().AsNoTracking();
         }

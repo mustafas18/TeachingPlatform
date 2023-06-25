@@ -20,6 +20,7 @@ namespace Infrastructure
             services.AddScoped(typeof(IReadRepository<>), typeof(EfRepository<>));
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
 
 
         }
